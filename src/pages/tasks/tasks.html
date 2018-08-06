@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{'literals.tasks' | trans }</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="!loading">
+
+    <ng-container *ngIf="ordered['in progress']?.length > 0">
+      <ion-list-header color="primary" ion-text>
+        {{ 'literals.in progress' | trans }}
+      </ion-list-header>
+      <button ion-item *ngFor="let task of ordered['in progress']" (click)="actions(task)">
+        <h2>{{task.title}}</h2>
+        <h3>{{task.cliente?.full_name_cedula}}</h3>
+        <a (click)="gotoMaps(task)">
+          {{ task.location.address }}
+        </a>
+        <p text-wrap>{{task.description}}</p>
+        <span text-right>{{task.timestamp | amLocale:'es-us' | amCalendar }}</span>
+      </button>
+    </ng-container>
+
+
+    <ng-container *ngIf="ordered['open']?.length > 0">
+      <ion-list-header color="primary" ion-text>
+        {{ 'literals.open' | trans }}
+      </ion-list-header>
+      <button ion-item *ngFor="let task of ordered['open']" (click)="actions(task)">
+        <h2>{{task.title}}</h2>
+        <h3>{{task.cliente?.full_name_cedula}}</h3>
+        <a (click)="gotoMaps(task)">
+          {{ task.location.address }}
+        </a>
+        <p text-wrap>{{task.description}}</p>
+        <span text-right>{{task.timestamp | amLocale:'es-us' | amCalendar }}</span>
+      </button>
+    </ng-container>
+
+
+    <ng-container *ngIf="ordered['closed']?.length > 0">
+      <ion-list-header color="primary" ion-text>
+        {{ 'literals.closed' | trans }}
+      </ion-list-header>
+      <button ion-item *ngFor="let task of ordered['closed']" (click)="actions(task)">
+        <h2>{{task.title}}</h2>
+        <h3>{{task.cliente?.full_name_cedula}}</h3>
+        <a (click)="gotoMaps(task)">
+          {{ task.location.address }}
+        </a>
+        <p text-wrap>{{task.description}}</p>
+        <span text-right>{{task.timestamp | amLocale:'es-us' | amCalendar }}</span>
+      </button>
+    </ng-container>
+
+
+  </ion-list>
+</ion-content>
