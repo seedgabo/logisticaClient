@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{'literals.item' | trans }} | {{item?.item}} </ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <input type="file" capture="camera" id="input-image" accept="image/*" (change)="readFile($event)" style="display:none;">
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>{{'literals.item' | trans}}</ion-label>
+      <ion-input [(ngModel)]="item.item"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{'literals.description' | trans}}</ion-label>
+      <ion-textarea [(ngModel)]="item.descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{'literals.reference' | trans}}</ion-label>
+      <ion-input [(ngModel)]="item.referencia"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects.bodegas">
+      <ion-label floating>{{'literals.storage' | trans}}</ion-label>
+      <ion-select [(ngModel)]="item.bodega_id" [disabled]="bodega">
+        <ion-option [value]="bodega.id" *ngFor="let bodega of api.objects.bodegas">
+          {{ bodega.nombre }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="!item.id">
+      <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+      <ion-input type="number" [(ngModel)]="qty"></ion-input>
+    </ion-item>
+
+    <div text-center *ngIf="file_name.length > 0">
+      {{file_name}}
+    </div>
+    <button large ion-button block icon-only (click)="askFile()">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </ion-list>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button block [disabled]="!canSave() || loading" ion-button color="primary" (click)="save()">
+      {{'crud.save' | trans }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Editar Caso</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="dismiss()"> <ion-icon name="close"> </ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-label floating>Contenido</ion-label>
+        <ion-textarea rows="4" [(ngModel)]="contenido"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Responsable</ion-label>
+      <ion-select [(ngModel)]="guardian_id">
+        <ion-option *ngFor="let user of usuarios" value="{{user.id}}">{{user.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Estado</ion-label>
+        <ion-select [(ngModel)]="estado">
+            <ion-option value="abierto">Abierto</ion-option>
+            <ion-option value="cerrado">Cerrado</ion-option>
+            <ion-option value="en curso">En Curso</ion-option>
+            <ion-option value="completado">Completado</ion-option>
+            <ion-option value="rechazado">Rechazado</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Vencimiento</ion-label>
+      <ion-datetime displayFormat="DDD D de MM de YYYY h:mm A" pickerFormat="D M YYYY h mm A" [(ngModel)]="vencimiento"></ion-datetime>
+    </ion-item>
+
+
+    <button ion-button block color="primary" (click)="putTicket()"><ion-icon name="save"></ion-icon> Guardar</button>
+
+</ion-content>

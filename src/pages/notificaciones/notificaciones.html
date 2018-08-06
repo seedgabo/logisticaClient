@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Notificaciones
+    </ion-title>
+    <ion-buttons end>
+      <button small clear ion-button (click)="leerTodas()">
+        Leer Todas
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let not of notificaciones" #item>
+      <button ion-item (click)="verNotificacion(not)">
+        <h2 tet-center>{{ not.titulo }}</h2>
+        <p>{{not.mensaje}}</p>
+        <p text-right>{{not.created_at}}</p>
+        <ion-icon item-right color="primary" [name]="not.leido == 0 ? 'notifications' : 'ios-notifications-outline'"></ion-icon>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button (click)="leer(not, item)" *ngIf="not.leido == 0" color="favorite">
+          <ion-icon name="ios-notifications-outline"></ion-icon>
+          Marcar Leida
+        </button>
+        <button ion-button (click)="desleer(not, item)" *ngIf="not.leido == 1" color="favorite">
+          <ion-icon name="ios-notifications"></ion-icon>
+          Marcar No Leida
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{ categoria.nombre }}
+
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="categorias && categorias.length > 0">
+    <ion-list-header>SubCategorias</ion-list-header>
+    <button ion-item *ngFor="let cat of categorias" (click)="navigateToCat(cat)">
+      <ion-icon name="folder" item-left></ion-icon> {{cat.nombre}}
+      <ion-icon name="arrow-forward" item-right showWhen="android"></ion-icon>
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'literals.tickets' | trans }}
+    </ion-list-header>
+    <list-ticket *ngFor="let ticket of tickets" [ticket]="ticket"></list-ticket>
+
+  </ion-list>
+  <ion-item *ngIf="tickets && tickets.length ==0">
+    <h2>No Hay {{'literals.tickets' | trans }} </h2>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-fab bottom right>
+    <button ion-fab (click)="agregarTicket(categoria)">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-footer>

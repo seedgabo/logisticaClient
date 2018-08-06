@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{'__.Recolector de Firmas' | trans }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="getData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list [virtualScroll]="list">
+    <ion-item-sliding *virtualItem="let i">
+      <ion-item>
+        <h2>
+          {{i.creator?.full_name}}
+        </h2>
+        <h3>
+          {{i.entidad?.full_name}}
+        </h3>
+        <p text-right>
+          {{ i.created_at | amLocale:'es-us' | amDateFormat:'llll' }}
+        </p>
+
+        <ion-thumbnail item-right>
+          <img [src]="i.image?.url" *ngIf="i.image">
+        </ion-thumbnail>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button icon-only color="danger" (click)="deleteAnnotation(i.id)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row align-items-end>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>{{'literals.user' | trans}}</ion-label>
+            <ion-select *ngIf="api.objects.users" [(ngModel)]="item.user_id">
+              <ion-option [value]="user.id" *ngFor="let user of api.objects.users">
+                {{user.full_name }}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked> {{'literals.entity' | trans}}</ion-label>
+            <ion-select *ngIf="api.objects.entidades" [(ngModel)]="item.entidad_id">
+              <ion-option [value]="entidad.id" *ngFor="let entidad of api.objects.entidades">
+                {{entidad.full_name }}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <signature [(ngModel)]="item.signature"></signature>
+        </ion-col>
+        <ion-col col-1>
+          <button ion-button icon-only block clear color="secondary" [disabled]="!(item.signature && item.user_id)" (click)="uploadAnnotation()">
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

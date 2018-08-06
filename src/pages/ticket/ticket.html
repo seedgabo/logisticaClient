@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title> {{ ticket.titulo }} </ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="ticket.user_id == api.user.id" (click)="editTicket()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="ticket">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!addingTag">
+    <ion-grid>
+      <ion-row wrap>
+        <ng-container *ngIf="ticket.tags">
+          <ion-col col-auto *ngFor="let tag of ticket.tags; let i = index">
+            <ion-badge [style.background]="tag.color" style="color:white;" small>
+              {{tag.value}}
+              <button (click)="removeTag(tag,i)" small ion-button clear color="danger">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-badge>
+            &nbsp;
+          </ion-col>
+
+        </ng-container>
+        <ion-col col-auto>
+          <button ion-button small outline (click)="addingTag=!addingTag">
+            Agregar
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid *ngIf="addingTag">
+    <ion-row>
+      <ion-col col-4>
+        <ion-item>
+          <ion-label floating>{{'literals.text' | trans }}</ion-label>
+          <ion-input [(ngModel)]="tag.value"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item>
+          <ion-label floating>{{'literals.color' | trans }}</ion-label>
+          <ion-select [(ngModel)]="tag.color">
+            <ion-option *ngFor="let color of colors" [value]="color.color">
+              <span [style.background]="color.color">{{color.name}}</span>
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button outline (click)="addtag()">
+          <ion-icon name="add"></ion-icon>
+          Agregar
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+    <ion-list-header color="primary" text-center>
+      {{ticket.titulo}}
+      <button ion-button color="light" round clear item-right (click)="datos = !datos">
+        <ion-icon [name]="!datos ? 'add-circle': 'remove-circle'"></ion-icon>
+      </button>
+    </ion-list-header>
+    <div padding [innerHTML]="ticket.contenido"></div>
+    <button ion-button clear text-right color="secondary" *ngIf="ticket.archivo && ticket.encriptado == 0" (click)="descargarArchivoTicket()">{{ticket.archivo}}</button>
+    <button ion-button clear text-right color="secondary" *ngIf="ticket.archivo && ticket.encriptado == 1" (click)="preguntarClave()">
+      <ion-icon name="lock"></ion-icon>{{ticket.archivo}}</button>
+
+    <div *ngIf="datos">
+      <p text-right>
+        <b>Categoria: </b>
+        <span *ngIf="ticket.categoria">{{ticket.categoria.nombre}}</span>
+      </p>
+      <p text-right *ngIf="ticket.user">
+        <b>Creador:</b> {{ticket.user.nombre}}</p>
+      <p text-right *ngIf="ticket.guardian">
+        <b>Responsable:</b> {{ticket.guardian.nombre}}</p>
+      <p text-right>
+        <b>del: {{fechar(ticket.created_at) }}</b>
+      </p>
+      <p text-right>
+        <b>Vence el: {{fechar(ticket.vencimiento) }}</b>
+      </p>
+      <p text-center>
+        <ion-badge [ngClass]="ticket.estado">{{ticket.estado}}</ion-badge>
+      </p>
+    </div>
+
+  </ion-card>
+  <ion-card>
+    <ion-list-header text-center>Seguimiento</ion-list-header>
+    <ion-list *ngIf="comentarios">
+      <div text-center>
+        <button ion-button color="secondary" (click)="agregarComentario()">
+          <ion-icon name="add"></ion-icon>
+          Agrega tu Seguimiento
+        </button>
+      </div>
+      <ion-item-sliding *ngFor="let com of comentarios">
+        <ion-item text-wrap>
+          <p [innerHTML]="com.texto"></p>
+          <button ion-button clear text-right color="secondary" (click)="descargarArchivoComentario(com)" *ngIf="com.archivo && com.encriptado == 0">{{com.archivo}}</button>
+          <button ion-button clear text-right color="secondary" (click)="preguntarClaveComentario(com)" *ngIf="com.archivo && com.encriptado == 1">
+            <ion-icon name="lock"></ion-icon> {{com.archivo}}</button>
+          <ion-badge text-right color="Primary" *ngIf="!api.user.iscliente && com.publico">Publico</ion-badge>
+          <p text-right *ngIf="com.user">
+            <b>Por: </b> {{com.user.nombre}} </p>
+          <p text-right>
+            <b>{{ fechar(com.created_at) }}</b>
+          </p>
+
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" *ngIf="com.user?.id == api.user.id" (click)="eliminarcomentario(com)">
+            <ion-icon name="trash"></ion-icon>
+            Borrar
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-card>
+</ion-content>

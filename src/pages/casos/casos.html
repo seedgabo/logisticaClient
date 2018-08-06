@@ -1,0 +1,20 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title color="primary">Casos de {{paciente.full_name}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <button no-padding ion-item color="secondary" *ngFor="let caso of casos" (click)="verCaso(caso)">
+            <ion-icon name="briefcase" item-left></ion-icon>
+            <p>{{caso.titulo_caso}}</p>
+            <p>Apertura: {{caso.apertura}}</p>
+            <p *ngIf="caso.medico">Médico: {{caso.medico.nombre}}</p>
+            <p>Dias Incapacidad Total: {{caso.dias_incapacidad_acumulados}}</p>
+        </button>
+    </ion-list>
+</ion-content>

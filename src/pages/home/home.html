@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title *ngIf="!buscar">
+      Casos
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openBuscador()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="toNotificaciones()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge>{{api.user.notificaciones_count}}</ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+  <ion-refresher (ionRefresh)="load($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="col-sm-6">
+    <ion-list>
+      <ion-list-header>Por categorias</ion-list-header>
+      <button ion-item *ngFor="let cat of categorias" (click)="navigate(cat)">
+        <ion-icon name="folder" item-left></ion-icon> {{cat.nombre}}
+      </button>
+    </ion-list>
+  </div>
+
+
+  <ion-fab bottom right>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <div class="fab-label-button">
+        <div class="label">
+          Agregar Ticket
+        </div>
+        <button (click)="agregarTicket()" ion-fab color="secondary">
+          <ion-icon name="create"></ion-icon>
+        </button>
+
+      </div>
+      <div class="fab-label-button">
+        <div class="label">
+          Agregar Alerta
+        </div>
+        <button (click)="agregaNotificacion()" ion-fab color="warning">
+          <ion-icon name="alarm"></ion-icon>
+        </button>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+<ion-footer>
+</ion-footer>

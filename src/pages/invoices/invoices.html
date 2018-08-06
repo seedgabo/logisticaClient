@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ 'literals.invoices' | trans }}</ion-title>
+    <ion-buttons end>
+      <span *ngIf="_invoices" ion-text color="light">
+        {{_invoices?.data.length}} / {{_invoices?.total}}
+      </span>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" [debounce]="750" (ionInput)="filter()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div text-center *ngIf="loading">
+    <ion-spinner color="primary"></ion-spinner>
+    <p>
+      {{('__.fetching last' | trans)}} 500 {{'literals.invoices' | trans }}
+    </p>
+  </div>
+  <ion-list style="height:100%" [virtualScroll]="invoices" approxItemHeight="100px">
+    <ion-item-sliding *virtualItem="let inv">
+      <button ion-item (click)="selectInvoice(inv)">
+        <h2># {{inv.number}}</h2>
+        <h3>{{inv.cliente?.full_name_cedula}}</h3>
+        <h4>{{inv.fecha | amDateFormat:'llll' }}</h4>
+        <h5 [class]="inv.estado"> {{ inv.estado }} </h5>
+        <p item-right>
+          {{inv.total | currency:'COP':'symbol-narrow':'1.0-0' }}
+        </p>
+      </button>
+      <ion-item-options side=right>
+        <button ion-button color="primary" (click)="downloadInvoice(inv)">
+          <ion-icon name="download"></ion-icon>
+          {{'literals.download' | trans }}
+        </button>
+        <button ion-button color="danger" (click)="confirmDelete(inv)">
+          <ion-icon name="trash"></ion-icon>
+          {{'crud.delete' | trans }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

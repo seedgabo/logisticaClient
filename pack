@@ -1,0 +1,11 @@
+#!/bin/bash
+# a Sample bash script
+if [ -z "$1" ]
+  then
+    echo "No argument supplied"
+    exit
+fi
+cd ./platforms/browser/www
+rsync --exclude=assets/header.js -avz --delete . "gabriel@newton.eycproveedores.com:htdocs/$1/web"
+echo "syncronized"
+cd ../../../

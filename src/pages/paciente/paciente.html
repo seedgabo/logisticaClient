@@ -1,0 +1,60 @@
+
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title>{{paciente.full_name}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="paciente">
+        <div text-center>
+            <img src="{{paciente.foto_url}}" class="foto-paciente">
+        </div>
+        <ion-list>
+            <ion-list-header>
+                <h6>Datos Paciente</h6>
+            </ion-list-header>
+            <ion-item>
+                <b>Nombres:</b> <span>{{ paciente.nombres }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Apellidos:</b> <span>{{ paciente.apellidos }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Fecha de Nacimiento:</b> <span>{{ paciente.nacimiento }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Cedula:</b> <span>{{ paciente.cedula }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Sexo:</b> <span>{{ paciente.sexo == 'M' ? 'Masculino' : 'Femenino'}}</span>
+            </ion-item>
+            <ion-item>
+                <b>Estado Civil:</b> <span>{{ paciente.estado_civil }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Telefono:</b> <span>{{ paciente.telefono }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Email:</b> <span>{{ paciente.email }}</span>
+            </ion-item>
+            <ion-item>
+                <b>Direccion:</b> <span>{{ paciente.direccion }}</span>
+            </ion-item>
+            <ion-item *ngIf="paciente.eps">
+                <b>Eps:</b> <span>{{ paciente.eps.nombre }}</span>
+            </ion-item>
+            <ion-item *ngIf="paciente.arl">
+                <b>Arl:</b> <span>{{ paciente.arl.nombre }}</span>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-list-header>Casos:</ion-list-header>
+            <button ion-item *ngFor="let caso of paciente.casos" (click)="verCaso(caso)">
+                {{caso.titulo_caso}}
+                <p color="primary" text-right>Apertura:{{caso.apertura}}</p>
+            </button>
+        </ion-list>
+</ion-content>

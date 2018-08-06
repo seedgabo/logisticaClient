@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Todos Los Casos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>{{'literals.tickets' | trans}}</ion-list-header>
+    <list-ticket *ngFor="let ticket of tickets" [ticket]="ticket"></list-ticket>
+  </ion-list>
+  <ion-item *ngIf="tickets && tickets.length ==0">
+    <h2>No Hay {{'literals.tickets' | trans }} </h2>
+  </ion-item>
+
+</ion-content>

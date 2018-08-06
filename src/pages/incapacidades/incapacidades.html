@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Incapacidades de {{paciente.full_name}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <button ion-item *ngFor="let incap of incapacidades" (click)="verIncapacidad(incap)">
+            <p><b>Origen:</b> {{incap.origen}}</p>
+            <p item-right><b>Dias:</b>{{incap.dias_incapacidad}}</p>
+            <p text-right>Médico: <span *ngIf="incap.medico">{{incap.medico.nombre}}</span></p>
+        </button>
+    </ion-list>
+</ion-content>

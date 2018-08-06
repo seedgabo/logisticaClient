@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'literals.pick' | trans }} {{'literals.items' | trans }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{'literals.item' | trans}}</ion-label>
+      <ion-select [(ngModel)]="item">
+        <ion-option [disabled]="i.disabled" [value]="i" *ngFor="let i of items">{{i.item}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+      <ion-input type="number" min="1" [(ngModel)]="quantity"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'literals.reason' | trans}}</ion-label>
+      <ion-textarea [(ngModel)]="razon"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="secondary" (click)="choose()" [disabled]="!canChoose()">
+      {{'crud.save' | trans }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

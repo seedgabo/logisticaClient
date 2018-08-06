@@ -1,0 +1,37 @@
+.caso {
+
+}
+
+
+ion-card-header[color="primary"]{
+    background-color: color($colors,primary);
+    color: white;
+}
+ion-card-header[color="secondary"]{
+    background-color: color($colors,secondary);
+    color: white;
+}
+ion-card-header[color="favorite"]{
+    background-color: color($colors,favorite);
+    color: white;
+}
+ion-card-header[royal]{
+    background-color: color($colors,royal);
+    color: white;
+}
+ion-list-header[color="primary"]{
+    background-color: color($colors,primary);
+    color: white;
+}
+ion-list-header[color="secondary"]{
+    background-color: color($colors,secondary);
+    color: white;
+}
+ion-list-header[color="favorite"]{
+    background-color: color($colors,favorite);
+    color: white;
+}
+ion-list-header[royal]{
+    background-color: color($colors,royal);
+    color: white;
+}

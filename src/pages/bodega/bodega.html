@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ bodega?.nombre }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="filter()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="getData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list [virtualScroll]="items">
+    <button ion-item *virtualItem="let item" approxItemHeight="100px" [title]="item.description" (click)="actions(item)">
+      <ion-thumbnail item-left>
+        <img [src]="item.foto_url">
+      </ion-thumbnail>
+      <h2>{{item.item}}</h2>
+      <h3>{{item.descripcion}}</h3>
+      <h3 item-right ion-text [color]="item.pivot.stock === 0 ? 'danger' : 'primary'">{{item.pivot.stock}} {{ item.units }} </h3>
+    </button>
+  </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab color="favorite" (click)="actionsAdd()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

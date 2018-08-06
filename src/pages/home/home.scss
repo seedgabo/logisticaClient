@@ -1,0 +1,37 @@
+.logo-header{
+    img{
+        height: 70px;
+        display: inline;
+        margin: 0 auto;
+    }
+    background-image: url(../assets/img/hero.png);
+    background-size: cover;
+}
+
+
+
+.abierto{
+	color: rgba(0,0,255,0.5);
+    font-weight: 500;
+}
+
+.completado{
+	color: rgba(0,255,0,0.5);
+    font-weight: 500;
+}
+
+.vencido{
+	color: rgba(255,0,0,0.5);
+    font-weight: 500;
+}
+
+ion-icon.abierto{
+	color: rgba(0,0,255,1);
+}
+
+ion-icon.completado{
+	color: rgba(0,255,0,1);
+}
+ion-icon.vencido{
+	color: rgba(255,0,0,1);
+}

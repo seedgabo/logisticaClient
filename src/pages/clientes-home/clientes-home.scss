@@ -1,0 +1,25 @@
+page-clientes-home {
+    ion-badge.abierto{
+        padding: 3px 8px !important;
+    	background-color: color($colors,primary);
+    	color:white;
+        font-weight: 500;
+        padding: 2px;
+    }
+
+    ion-badge.completado{
+        padding: 3px 8px !important;
+    	background-color: color($colors,secondary);
+    	color:white;
+        font-weight: 500;
+        padding: 2px;
+    }
+
+    ion-badge.vencido{
+        padding: 3px 8px !important;
+    	background-color: color($colors,danger);
+    	color:white;
+        font-weight: 500;
+        padding: 2px;
+    }
+}

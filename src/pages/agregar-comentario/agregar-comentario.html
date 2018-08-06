@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Agregar Seguimiento</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="pickFile()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <input type="file" id="input-file-comment" style="display:none;" (change)="readFile($event)">
+
+
+  <h2 text-center>Agregar Seguimiento a {{ticket.titulo}}</h2>
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>Contenido</ion-label>
+      <ion-textarea rows="6" placeholder="Agregue su contribución..." [(ngModel)]="texto"></ion-textarea>
+    </ion-item>
+    <ion-item *ngIf="file != null">
+      <ion-label floating>Clave de Encriptado (Opcional)</ion-label>
+      <ion-input type="password" [(ngModel)]="clave"></ion-input>
+    </ion-item>
+    <button ion-button full (click)="agregarComentario()" [disabled]="texto.length < 5"> Agregar Seguimiento</button>
+  </ion-list>
+</ion-content>

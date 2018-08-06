@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Incapacidad de <span *ngIf="incapacidad.paciente">{{incapacidad.paciente.full_name}} </span></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            Incapacidad de <span *ngIf="incapacidad.paciente">{{incapacidad.paciente.full_name}} </span>
+        </ion-card-header>
+        <ion-list>
+            <ion-item><b>Caso: </b><span *ngIf="incapacidad.caso">#{{incapacidad.caso.id}}</span></ion-item>
+            <ion-item><b>Médico: </b><span *ngIf="incapacidad.medico"> {{incapacidad.medico.nombre}} </span></ion-item>
+            <ion-item><b>Fecha de Ingreso: </b><span> {{incapacidad.fecha_ingreso}}</span></ion-item>
+            <ion-item><b>Fecha de Incapacidad: </b><span> {{incapacidad.fecha_incapacidad}} </span></ion-item>
+            <ion-item><b>Fecha de Liquidación: </b><span> {{incapacidad.fecha_liquidacion}} </span></ion-item>
+            <ion-item><b>Entidad: </b><span>{{incapacidad.entidad}}</span></ion-item>
+            <ion-item><b>Eps: </b><span *ngIf="incapacidad.eps">{{incapacidad.eps.nombre}}</span></ion-item>
+            <ion-item><b>CIE10: </b><span *ngIf="incapacidad.cie10">{{incapacidad.cie10.codigo}}</span></ion-item>
+            <ion-item><b>Días: </b><span> {{incapacidad.dias_incapacidad}} </span></ion-item>
+            <ion-item><b>Prorroga: </b><span> {{incapacidad.prorroga}} </span></ion-item>
+            <ion-item><b>Origen: </b><span> {{incapacidad.origen}} </span></ion-item>
+            <ion-item><b>Sistema Afectado: </b><span> {{incapacidad.sistema_afectado}} </span></ion-item>
+            <ion-item><b>Caso Especial: </b><span> {{incapacidad.caso_especial}} </span></ion-item>
+        </ion-list>
+    </ion-card>
+
+</ion-content>

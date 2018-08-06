@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar color="favorite">
+    <ion-title>{{'literals.transaction' | trans }} {{'literals.' + transaction.transaccion | trans }} | {{ item.item }} </ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{'literals.reason' | trans}}</ion-label>
+      <ion-textarea [(ngModel)]="transaction.razon"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+      <ion-input type="number" [(ngModel)]="transaction.quantity"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects.bodegas">
+      <ion-label floating>{{'storage.source warehouse' | trans}}</ion-label>
+      <ion-select disabled [(ngModel)]="bodega.id">
+        <ion-option [value]="bod.id" *ngFor="let bod of api.objects.bodegas">
+          {{ bod.nombre }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects.bodegas && transaction.transaccion == 'Movimiento'">
+      <ion-label floating>{{'storage.destination warehouse' | trans}}</ion-label>
+      <ion-select [(ngModel)]="transaction.bodega_saliente_id">
+        <ion-option [value]="bod.id" *ngFor="let bod of api.objects.bodegas">
+          {{ bod.nombre }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects.clientes">
+      <ion-label floating>{{'literals.client' | trans}}</ion-label>
+      <ion-select [(ngModel)]="transaction.cliente_id">
+        <ion-option [value]="cli.id" *ngFor="let cli of api.objects.clientes">
+          {{ cli.full_name }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects.entidades">
+      <ion-label floating>{{'literals.entity' | trans}}</ion-label>
+      <ion-select [(ngModel)]="transaction.entidad_id">
+        <ion-option [value]="entity.id" *ngFor="let entity of api.objects.entidades">
+          {{ entity.full_name }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary" [disabled]="!canTrans()" (click)="doTrans()">
+      {{ 'crud.save' | trans }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

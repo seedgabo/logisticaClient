@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Clientes</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="buscar()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div (swipe)="swipe($event)" style="height:100%">
+    <ion-refresher (ionRefresh)="ionViewDidLoad($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list [virtualScroll]="clientes" style="height:100%" [approxItemHeight]="'100px'">
+      <button ion-item *virtualItem="let cliente" (click)="verCliente(cliente)">
+        <ion-avatar item-left>
+          <img [src]="cliente.foto_url">
+        </ion-avatar>
+        <h2>{{cliente.full_name}}</h2>
+        <h3>{{cliente.nit && cliente.nit.length >0 ? cliente.nit : cliente.cedula}}</h3>
+      </button>
+    </ion-list>
+  </div>
+</ion-content>

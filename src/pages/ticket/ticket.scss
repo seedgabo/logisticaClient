@@ -1,0 +1,39 @@
+.ticket {
+  .header {
+    background-color: color($colors, favorite);
+    color: white;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: white;
+    }
+  }
+  .header [secondary] {
+    background-color: color($colors, secondary);
+    color: white;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: white;
+    }
+  }
+  .form-control-color {
+    margin-top: 22px;
+    width: 100px;
+    height: 40px;
+    vertical-align: bottom;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #CCC;
+  }
+  ion-badge {
+    padding: 0px 6px;
+    margin: 0px;
+  }
+}

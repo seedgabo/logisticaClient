@@ -1,0 +1,212 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only color="primary">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Factura # {{invoice.number}}</ion-title>
+    <ion-buttons end>
+      <button ion-button color="primary" (click)="downloadPdf()">
+        <ion-icon name="document"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="container">
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-list>
+            <ng-container *ngIf="invoice.cliente">
+              <ion-list-header color="light">
+                {{'literals.client' | trans }}
+              </ion-list-header>
+              <ion-item>
+                {{ invoice.cliente.full_name_cedula }}
+              </ion-item>
+              <ion-list-header color="light" text-capitalize>
+                {{'literals.info' | trans }}
+              </ion-list-header>
+            </ng-container>
+            <ion-item text-wrap>
+              <b>{{'literals.date' | trans }} </b>
+              <span>{{ invoice.fecha | amDateFormat: "LLLL" }}</span>
+            </ion-item>
+            <ion-item text-wrap>
+              <b>{{'literals.address' | trans }} </b>
+              <span>{{ invoice.direccion }}</span>
+            </ion-item>
+            <ion-item text-wrap>
+              <b>{{'literals.status' | trans }} </b>
+              <span [ngClass]="invoice.estado">{{ invoice.estado }}</span>
+            </ion-item>
+
+            <ion-item text-wrap *ngIf="invoice.nota">
+              <b>{{'literals.note' | trans }} </b>
+              <span>{{ invoice.nota }}</span>
+            </ion-item>
+
+            <ion-item text-wrap *ngIf="invoice.pago">
+              <b>{{'literals.payment' | trans }}</b>
+              <span>{{ invoice.pago }}</span>
+            </ion-item>
+
+            <ion-item text-wrap *ngIf="invoice.orden_compra">
+              <b>{{'literals.orden_compra' | trans }}</b>
+              <span>{{ invoice.orden_compra }}</span>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+        <ion-card>
+          <ion-list>
+            <ion-list-header color="light">
+              {{ 'literals.products' | trans }}
+            </ion-list-header>
+            <ion-item *ngFor="let product of invoice.products">
+              <h2>{{product.name}}</h2>
+              <h2>{{product.cantidad_pedidos}}</h2>
+              <h2>{{product.precio | currency:'COP':'symbol-narrow':'1.0-0'}}</h2>
+              <h3 item-right>{{product.cantidad_pedidos * product.precio | currency:'COP':'symbol-narrow':'1.0-0'}}</h3>
+            </ion-item>
+            <ion-item-divider color="light">
+              <h2>
+                {{ 'literals.subtotal' | trans }}
+              </h2>
+              <h3 item-right> {{ invoice.sub_total | currency:'COP':'symbol-narrow':'1.0-0' }} </h3>
+            </ion-item-divider>
+            <ion-item-divider color="light">
+              <h2>
+                {{ 'literals.taxes' | trans }}
+              </h2>
+              <h3 item-right> {{ invoice.taxes | currency:'COP':'symbol-narrow':'1.0-0' }} </h3>
+            </ion-item-divider>
+            <ion-item-divider color="light">
+              <h2>
+                {{ 'literals.total' | trans }}
+              </h2>
+              <h3 item-right> {{ invoice.total | currency:'COP':'symbol-narrow':'1.0-0' }} </h3>
+            </ion-item-divider>
+          </ion-list>
+
+        </ion-card>
+      </ion-col>
+
+
+      <ion-col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6>
+        <ion-card>
+
+          <ion-list>
+
+            <ng-container *ngIf="invoice.vendedor">
+              <ion-list-header color="light">
+                {{'literals.seller' | trans }}
+              </ion-list-header>
+              <ion-item>
+                {{ invoice.vendedor.full_name }}
+              </ion-item>
+            </ng-container>
+
+
+            <ng-container *ngIf="invoice.pedido">
+              <ion-list-header color="light">
+                {{'literals.order' | trans }}
+              </ion-list-header>
+              <ion-item>
+                {{ invoice.pedido.numero }}
+              </ion-item>
+            </ng-container>
+
+
+            <ng-container *ngIf="invoice.receipts && invoice.receipts.length > 0">
+              <ion-list-header color="light">
+                {{'literals.receipts' | trans }}
+              </ion-list-header>
+              <ion-item *ngFor="let rec of invoice.receipts">
+                <h2>
+                  # {{ rec.id }}
+                </h2>
+                <h3>
+                  {{rec.created_at | amDateFormat:"lll"}}
+                </h3>
+                <p>
+                  {{rec.concept}}
+                </p>
+
+              </ion-item>
+            </ng-container>
+
+
+            <ng-container *ngIf="invoice.debitnotes && invoice.debitnotes.length > 0">
+              <ion-list-header color="light">
+                {{'literals.debit notes' | trans }}
+              </ion-list-header>
+              <ion-item *ngFor="let rec of invoice.debitnotes">
+                <h2>
+                  # {{ rec.id }}
+                </h2>
+                <h3>
+                  {{rec.created_at | amDateFormat:"lll"}}
+                </h3>
+                <p>
+                  {{rec.concept}}
+                </p>
+
+              </ion-item>
+            </ng-container>
+
+            <ng-container *ngIf="invoice.creditnotes && invoice.creditnotes.length > 0">
+              <ion-list-header color="light">
+                {{'literals.debit notes' | trans }}
+              </ion-list-header>
+              <ion-item *ngFor="let rec of invoice.creditnotes">
+                <h2>
+                  # {{ rec.id }}
+                </h2>
+                <h3>
+                  {{rec.created_at | amDateFormat:"lll"}}
+                </h3>
+                <p>
+                  {{rec.concept}}
+                </p>
+
+              </ion-item>
+            </ng-container>
+
+            <ng-container *ngIf="invoice.user">
+              <ion-list-header color="light">
+                {{'literals.user' | trans }}
+              </ion-list-header>
+              <ion-item>
+                {{ invoice.user.full_name }}
+              </ion-item>
+            </ng-container>
+
+
+            <ng-container *ngIf="invoice.entidad">
+              <ion-list-header color="light">
+                {{'literals.entity' | trans }}
+              </ion-list-header>
+              <ion-item>
+                {{ invoice.entidad.full_name }}
+              </ion-item>
+            </ng-container>
+
+          </ion-list>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

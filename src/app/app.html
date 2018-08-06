@@ -1,0 +1,87 @@
+<ion-split-pane [enabled]="false && api.user && api.user.id">
+  <ion-menu [content]="mycontent">
+    <ion-content>
+      <div>
+        <ion-grid class="logo-header">
+          <ion-row>
+            <ion-col col-4>
+              <ion-avatar>
+                <img *ngIf="api.user.imagen != null" [src]="api.user.imagen" class="img-circle" style="height:50px">
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-auto>
+              <h4>{{api.user.nombre}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-list>
+
+        <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="Tickets()">
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> {{ api.trans('literals.tickets') }}
+        </button>
+        <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="MisTickets()">
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis {{ api.trans('literals.tickets') }}
+        </button>
+        <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="TicketTodos()">
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Todos Los {{ api.trans('literals.tickets') }}
+        </button>
+
+        <ion-item-divider color="light">
+          <ion-icon small item-left name="apps"></ion-icon>
+          Modulos
+        </ion-item-divider>
+
+        <button ion-item menuClose detail-none no *ngIf="modulos.calendario" (click)="Calendar()">
+          <ion-icon name="calendar" item-right color="primary"></ion-icon> {{api.trans('literals.calendar')}}
+        </button>
+
+        <button ion-item menuClose detail-none no *ngIf="modulos.documentos" (click)="Documentos()">
+          <ion-icon name="folder-open" item-right color="primary"></ion-icon> {{api.trans('literals.documents')}}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="Clinica()" *ngIf="modulos.historias_clinicas">
+          <ion-icon name="medkit" item-right color="primary"></ion-icon> {{api.trans('literals.Historias Clinicas')}}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="gotoClientes()" *ngIf="modulos.clientes">
+          <ion-icon name="contacts" item-right color="primary"></ion-icon> {{api.trans('literals.clients')}}
+        </button>
+
+        <button ion-item menuClose detail-none no *ngIf="modulos.pedidos" (click)="Pedidos()">
+          <ion-icon name="cart" item-right color="primary"></ion-icon> {{ api.trans('literals.orders') }}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="Invoices()" *ngIf="modulos.clientes">
+          <ion-icon name="document" item-right color="primary"></ion-icon> {{ api.trans('literals.invoices') }}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="Suppliers()" *ngIf="modulos.proveedores">
+          <ion-icon name="contacts" item-right color="primary"></ion-icon> {{ api.trans('literals.suppliers') }}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="Bodegas()" *ngIf="modulos.inventarios">
+          <ion-icon name="logo-dropbox" item-right color="primary"></ion-icon> {{ api.trans('literals.storages') }}
+        </button>
+
+        <button ion-item menuClose detail-none no (click)="Annotations()" *ngIf="modulos.anotaciones">
+          <ion-icon name="ios-list-box" item-right color="primary"></ion-icon> {{ api.trans('literals.annotations') }}
+        </button>
+
+        <ion-item-divider color="light">
+          <ion-icon name="settings" small item-left></ion-icon>
+          Opciones
+        </ion-item-divider>
+        <button ion-item menuClose detail-none no (click)="toLogin()">
+          <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
+        </button>
+      </ion-list>
+    </ion-content>
+    <ion-footer text-center>
+      <div class="logo-header">
+        <img src="assets/img/logo-completo.png" alt="logo" style="height:35px">
+      </div>
+    </ion-footer>
+  </ion-menu>
+  <ion-nav [root]="rootPage" #mycontent main></ion-nav>
+</ion-split-pane>

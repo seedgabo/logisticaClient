@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-navbar color="favorite">
+    <ion-title>Pedido # {{pedido.numero_pedido}}</ion-title>
+    <ion-buttons end>
+      <button ion-button clear color="primary" (click)="advanced =!advanced">
+        {{ !advanced ? 'Normal' : 'Avanzado'}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="editing">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>#</ion-label>
+        <ion-input type="text" [(ngModel)]="pedido.numero_pedido" placeholder="no rellenar para poner automatico"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Fecha Pedido</ion-label>
+        <ion-datetime [(ngModel)]="pedido.fecha_pedido"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Direccion Envio</ion-label>
+        <ion-textarea type="text" [(ngModel)]="pedido.direccion_envio"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Estado</ion-label>
+        <ion-select [(ngModel)]="pedido.estado">
+          <ion-option value="Pedido">Pedido</ion-option>
+          <ion-option value="Pagado">Pagado</ion-option>
+          <ion-option value="Entregado">Entregado</ion-option>
+          <ion-option value="Reembolsado">numero_pedido</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="api.objects.entidades">
+        <ion-label floating> Entidad</ion-label>
+        <ion-select [(ngModel)]="pedido.entidad_id">
+          <ion-option *ngFor="let entidad of api.objects.entidades" [value]="entidad.id">{{entidad.full_name}}</ion-option>
+
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="api.objects.clientes">
+        <ion-label floating> Cliente</ion-label>
+        <ion-select [(ngModel)]="pedido.cliente_id">
+          <ion-option *ngFor="let cliente of api.objects.clientes" [value]="cliente.id">{{cliente.full_name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="api.objects.users">
+        <ion-label floating> Usuario</ion-label>
+        <ion-select [(ngModel)]="pedido.user_id">
+          <ion-option *ngFor="let user of api.objects.users" [value]="user.id">{{user.full_name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <div *ngIf="advanced">
+        <ion-item>
+          <ion-label floating>#</ion-label>
+          <ion-input type="text" [(ngModel)]="pedido.numero_pedido" placeholder="no rellenar para poner automatico"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Pago</ion-label>
+          <ion-select [(ngModel)]="pedido.pago">
+            <ion-option value="Pedido">Credito</ion-option>
+            <ion-option value="Pagado">Debito</ion-option>
+            <ion-option value="Entregado">Efctivo</ion-option>
+            <ion-option value="Reembolsado">Otro</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Tipo</ion-label>
+          <ion-input type="text" [(ngModel)]="pedido.tipo" placeholder="no rellenar para poner automatico"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Fecha Entrega</ion-label>
+          <ion-datetime [(ngModel)]="pedido.fecha_entrega"></ion-datetime>
+        </ion-item>
+
+      </div>
+
+    </ion-list>
+
+    <ion-list no-padding no-margin>
+      <div>
+        <ion-grid *ngFor="let item of pedido.items; let i = index">
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>{{'literals.name' | trans}}</ion-label>
+                <ion-input [(ngModel)]="item.name" [placeholder]=" 'literals.name' | trans"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>{{'literals.amount' | trans}}</ion-label>
+                <ion-input [(ngModel)]="item.precio" type="number" min="0" [placeholder]=" 'literals.amount' | trans"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+                <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" min="1" [placeholder]=" 'literals.quantity' | trans"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-1>
+              <button ion-button color="danger" clear icon-only (click)="removeItem(i)">
+                <ion-icon name="remove"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-item>
+        <button (click)="addItem()" ion-fab small mini item-right>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="secondary" [disabled]="!canSave()" (click)="save()">
+      Guardar
+    </button>
+  </ion-toolbar>
+</ion-footer>

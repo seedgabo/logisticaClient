@@ -1,0 +1,27 @@
+<button ion-item (click)="navigate(ticket)">
+  <h2 text-wrap wrap>
+    {{ticket.titulo}}
+    <ion-badge>{{ticket.comentarios_count}}</ion-badge>
+    <span *ngIf="ticket.tags">
+      <ion-badge [style.background]="tag.color" *ngFor="let tag of ticket.tags" style="color:white">
+        {{tag.value}}
+      </ion-badge>
+    </span>
+  </h2>
+  <h3>
+    <b>Estado:</b>
+    <span [ngClass]="ticket.estado"> {{ticket.estado}} </span>
+  </h3>
+  <p *ngIf="ticket.vencimiento">
+    <b>Vence:</b> {{fechar(ticket.vencimiento)}}
+  </p>
+
+  <small>
+    <b color="primary">Usuario: </b>{{ticket.user?.nombre}}
+  </small>
+  <br>
+
+  <small>
+    <b color="secondary">Responsable:</b> {{ticket.guardian?.nombre}}
+  </small>
+</button>

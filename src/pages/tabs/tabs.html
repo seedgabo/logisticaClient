@@ -1,0 +1,185 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title ion-text>
+      <img [src]="api.url + 'img/logo-newton.png'" style="max-height:57px">
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openBuscador()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="toNotificaciones()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-note>{{api.user.notificaciones_count}}</ion-note>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="greyten" #mycontent>
+  <ion-row align-items-center justify-content-center>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.tickets">
+      <div tappable class="primary tickets dash-card" padding no-margin (click)="Tickets()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="pricetags"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.tickets')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.documentos">
+      <div tappable class="secondary documentos dash-card" padding no-margin (click)="Documentos()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="folder"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.documents')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.clientes">
+      <div tappable class="warning clientes dash-card" padding no-margin (click)="gotoClientes()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="people"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.clients')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.pedidos">
+      <div tappable class="danger pedidos dash-card" padding no-margin (click)="Pedidos()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="cart"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.orders')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.clientes">
+      <div tappable class="pink facturas dash-card" padding no-margin (click)="Invoices()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="document"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.invoices')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.proveedores">
+      <div tappable class="orange proveedores dash-card" padding no-margin (click)="Suppliers()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="contacts"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.suppliers')}}</h1>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.inventarios">
+      <div tappable class="favorite bodegas dash-card" padding no-margin (click)="Bodegas()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="logo-dropbox"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.storages')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.anotaciones">
+      <div tappable class="warning annotations dash-card" padding no-margin (click)="Annotations()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="warning" name="ios-list-box"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.annotations')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.anotaciones">
+      <div tappable class="danger annotations dash-card" padding no-margin (click)="navCtrl.push('SignRecolectorPage')">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="danger" name="ios-list-box"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('__.Recolector de Firmas')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 *ngIf="modulos.calendario">
+      <div tappable class="secondary calendario dash-card" padding no-margin (click)="Calendar()">
+        <ion-grid>
+          <ion-row wrap>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3>
+              <ion-icon class="dash-icon" large color="primary" name="calendar"></ion-icon>
+            </ion-col>
+            <ion-col col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9>
+              <h1 class="dash-title">{{api.trans('literals.calendar')}}</h1>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-col>
+
+  </ion-row>
+</ion-content>

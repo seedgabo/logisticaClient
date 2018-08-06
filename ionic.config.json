@@ -1,0 +1,8 @@
+{
+  "name": "newtonApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "5acc8c23"
+}

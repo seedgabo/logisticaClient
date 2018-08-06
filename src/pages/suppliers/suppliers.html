@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'literals.suppliers' | trans }}</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="buscar()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="height:100%">
+    <ion-refresher (ionRefresh)="ionViewDidLoad($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list [virtualScroll]="suppliers" style="height:100%" [approxItemHeight]="'100px'">
+      <button ion-item *virtualItem="let supplier" (click)="verSupplier(supplier)">
+        <ion-avatar item-left>
+          <img [src]="supplier.foto_url">
+        </ion-avatar>
+        <h2>{{supplier.nombre}}</h2>
+        <h3>{{ supplier.documento }}</h3>
+        <p>{{supplier.bien_o_servicio}}</p>
+      </button>
+    </ion-list>
+  </div>
+</ion-content>

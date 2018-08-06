@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Facturas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <button ion-item  *ngFor="let factura of facturas" (click)="verInvoice(factura)">
+            <p text-center><b>#</b> {{factura.id}} </p>
+            <p><b>Estado:</b>  <ion-badge class="{{factura.estado}}">{{factura.estado}}</ion-badge> </p>
+            <p text-right><b>Fecha:</b> <span> {{fechar (factura.fecha)}}</span> </p>
+            <h2 text-right text-primary>Total: {{factura.total | currency:'USD':true:'1.2-2'}}</h2>
+        </button>
+    </ion-list>
+</ion-content>

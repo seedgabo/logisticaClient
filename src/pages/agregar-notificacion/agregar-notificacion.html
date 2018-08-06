@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="favorite">
+    <ion-title>
+      <ion-icon name="notifications"></ion-icon> Agregar Alerta</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Título</ion-label>
+      <ion-input [(ngModel)]="notification.titulo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contenido</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="notification.contenido"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Usuarios</ion-label>
+      <ion-select [(ngModel)]="notification.users_id" multiple>
+        <ion-option *ngFor="let user of usuarios" value="{{user.id}}">{{user.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-grid *ngIf="api.user.admin == 1">
+      <ion-row>
+        <ion-col>
+          <button ion-button small color="primary" full clear (click)="seleccionarTodos()">Seleccionar Todos</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button small color="primary" full clear (click)="notification.users_id = []">Quitar Todos</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item>
+      <ion-label stack>Programado</ion-label>
+      <ion-datetime displayFormat="DDD D de MM de YYYY h:mm A" pickerFormat="D M YYYY h mm A" [(ngModel)]="notification.programado"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stack> Entregar Inmediatamente?</ion-label>
+      <ion-checkbox [(ngModel)]="notification.inmediato"></ion-checkbox>
+    </ion-item>
+
+  </ion-list>
+  <button ion-button block [disabled]="rellenado()" color="secondary" (click)="agregarAlerta()"> Agregar Alerta </button>
+</ion-content>

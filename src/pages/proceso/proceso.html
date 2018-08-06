@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>
+            {{proceso.ticket != undefined  ? proceso.ticket.titulo : proceso.radicado}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-list>
+            <ion-item>
+                <b>Radicado:</b>
+                <span item-right>{{proceso.radicado}}</span>
+            </ion-item>
+            <div *ngIf="proceso.ticket != undefined">
+                <ion-item>
+                    <b>Estado:</b>
+                    <span item-right>{{proceso.ticket.estado}}</span>
+                </ion-item>
+                <ion-item>
+                    <b>Categoría:</b>
+                    <span item-right>{{proceso.ticket.categoria.nombre}}</span>
+                </ion-item>
+            </div>
+
+            <ion-item>
+                <b>Demandado:</b>
+                <span item-right>{{proceso.demandado}}</span>
+            </ion-item>
+
+            <ion-item>
+                <b>Demandante:</b>
+                <span item-right>{{proceso.demandante}}</span>
+            </ion-item>
+
+            <ion-item>
+                <b>Primera Instancia:</b>
+            </ion-item>
+            <ion-item>
+                <span>{{proceso.juzgado_instancia_1}}</span>
+            </ion-item>
+
+            <ion-item>
+                <b>Segunda Instancia</b>
+            </ion-item>
+            <ion-item>
+                <span item-right>{{proceso.juzgado_instancia_2}}</span>
+            </ion-item>
+
+            <button ion-button block color="primary" (click)="verTicket(proceso.ticket_id)">Ver Seguimiento</button>
+        </ion-list>
+    </ion-card>
+</ion-content>

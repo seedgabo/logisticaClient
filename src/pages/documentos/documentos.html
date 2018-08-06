@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{categoria.nombre}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="getDocumentos($event)" color="primary">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div text-center *ngIf="loading != ''">
+    <ion-spinner></ion-spinner>
+    <br> {{loading}}</div>
+  <ion-list *ngIf="categorias && categorias.length > 0">
+    <ion-list-header>Categorias</ion-list-header>
+    <button ion-item (click)="navigateToCat(cat)" *ngFor="let cat of categorias">
+      <ion-icon name="folder" item-left></ion-icon> {{cat.nombre}}
+    </button>
+  </ion-list>
+  <ion-list no-padding>
+    <ion-list-header *ngIf="documentos && documentos.length > 0">Documentos</ion-list-header>
+    <button ion-item *ngFor="let documento of documentos" (click)="descargarDocumento(documento)">
+      <ion-icon item-left name="document" color="favorite"></ion-icon>
+      <h3 text-center>{{documento.titulo}}</h3>
+      <p>{{documento.descripcion}}</p>
+      <button ion-button item-right clear color="secondary">
+        {{documento.mime}}
+      </button>
+    </button>
+    <ion-list-header *ngIf="documentos && documentos.length == 0">No hay documentos</ion-list-header>
+  </ion-list>
+</ion-content>

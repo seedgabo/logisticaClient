@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{proceso.titulo}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <h2><b>Cliente:</b> {{cliente.full_name}}</h2>
+    </ion-card-header>
+  </ion-card>
+  <ion-list>
+    <ion-item *ngFor="let item of fields">
+      <div *ngIf="item.type != 'manual'" style="white-space: initial;">
+        <h2><b>{{item.label? item.label : item.key }} : </b></h2>
+        <p>{{data[item.key]}}</p>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>
+            {{ consulta.ticket != undefined  ? consulta.ticket.titulo : consulta.radicado }}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-list>
+            <ion-item>
+                <b>Consulta:</b>
+            </ion-item>
+            <ion-item>
+                {{consulta.consulta}}
+            </ion-item>
+            <div *ngIf="consulta.ticket != undefined">
+                <ion-item>
+                    <b>Estado:</b>
+                    <span item-right>{{consulta.ticket.estado}}</span>
+                </ion-item>
+                <ion-item>
+                    <b>Categoría:</b>
+                    <span item-right>{{consulta.ticket.categoria.nombre}}</span>
+                </ion-item>
+            </div>
+
+            <ion-item>
+                {{consulta.respuesta}}
+            </ion-item>
+
+        </ion-list>
+
+        <button ion-button block color="primary" (click)="verTicket(consulta.ticket_id)">Ver Seguimiento</button>
+    </ion-card>
+</ion-content>

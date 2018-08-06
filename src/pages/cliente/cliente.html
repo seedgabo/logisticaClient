@@ -1,0 +1,126 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{cliente.full_name}}</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="filtrar()" [(ngModel)]="query" placeholder="buscar..."></ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <!-- Client Card -->
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <img [src]="cliente.foto_url" class="img-circle" style="width:100px">
+        </ion-col>
+        <ion-col col-8>
+          <ion-list-header text-wrap wrap>{{cliente.full_name}}</ion-list-header>
+          <ion-item text-wrap wrap>
+            <b> NIT/Cedula :</b> {{cliente.nit.length >0 ? cliente.nit : cliente.cedula}}
+          </ion-item>
+          <ion-item text-wrap wrap>
+            <b>Telefono: </b> {{cliente.telefono}}
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item text-wrap wrap>{{cliente.direccion}}</ion-item>
+  </ion-card>
+  <ion-grid>
+    <ion-row wrap>
+
+      <!-- Pedidos -->
+      <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4>
+        <ion-card *ngIf="api.user.modulos.pedidos">
+          <ion-list-header>{{'literals.orders' | trans }}</ion-list-header>
+          <ion-list>
+            <ion-item *ngFor="let pedido of pedidos">
+              <h2>
+                {{ pedido.numero_pedido }}
+              </h2>
+              <h3>
+                {{pedido.total | currency:'COP':'symbol-narrow':'1.0-0' }}
+              </h3>
+              <h4>{{ pedido.fecha_pedido | amDateFormat:'lll' }}</h4>
+              <ion-badge [ngClass]="pedido.estado">
+                {{pedido.estado}}
+              </ion-badge>
+              <button ion-button item-right clear (click)="verPedido(pedido)">VER</button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+
+      </ion-col>
+
+      <!-- Tickets -->
+      <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4>
+        <ion-card *ngIf="api.user.modulos.tickets">
+          <ion-list-header>{{'literals.tickets'| trans }}</ion-list-header>
+          <ion-list>
+            <list-ticket [ticket]="ticket" *ngFor="let ticket of tickets"></list-ticket>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+
+
+      <!-- Procesos -->
+      <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4>
+        <ion-card *ngIf="api.user.modulos.procesos">
+          <ion-list-header>Procesos</ion-list-header>
+          <ion-list>
+            <ion-item *ngFor="let proceso of procesos">
+              <div *ngIf="proceso.ticket != undefined">
+                <p>
+                  {{proceso.ticket.titulo}}
+                </p>
+                <p color="primary" ion-text *ngIf="proceso.ticket.categoria" [innerHTML]="proceso.ticket.categoria.full_name" style="white-space:normal">
+                </p>
+              </div>
+              <span>{{proceso.radicado}} </span>
+              <button ion-button item-right clear (click)="verProceso(proceso)">VER</button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+
+      <!-- Consultas -->
+      <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4>
+        <ion-card *ngIf="api.user.modulos.consultas">
+          <ion-list-header>Consultas</ion-list-header>
+          <ion-list>
+            <ion-item *ngFor="let consulta of consultas">
+              <div *ngIf="consulta.ticket != undefined">
+                <p>
+                  {{consulta.ticket.titulo}}
+                </p>
+                <p color="primary" ion-text *ngIf="consulta.ticket.categoria" [innerHTML]="consulta.ticket.categoria.full_name" style="white-space:normal">
+                </p>
+              </div>
+              {{consulta.consulta}}
+              <button ion-button item-right clear (click)="verConsulta(consulta)">VER</button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+
+      </ion-col>
+
+      <!-- Procesos Masivos -->
+      <ion-col col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4>
+        <ion-card *ngIf="api.user.modulos.procesos_masivos">
+          <ion-list-header>Procesos Masivos</ion-list-header>
+          <ion-list>
+            <button ion-item (click)="verProcesoMasivo(proceso)" *ngFor="let proceso of cliente.procesos_masivos">
+              {{proceso.titulo}}
+            </button>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-navbar color="favorite">
+    <ion-title>Agregar Ticket</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="pickFile()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <input type="file" id="input-file-comment" style="display:none;" (change)="readFile($event)">
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Título</ion-label>
+      <ion-input [(ngModel)]="ticket.titulo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contenido</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="ticket.contenido"></ion-textarea>
+    </ion-item>
+    <ion-item *ngIf="file != null">
+      <ion-label floating>Clave De Encriptado (Opcional)</ion-label>
+      <ion-input [(ngModel)]="ticket.clave" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Categoria</ion-label>
+      <ion-select [(ngModel)]="ticket.categoria_id" (ionChange)="reloadUsuarios()">
+        <ion-option *ngFor="let cat of categorias" value="{{cat.id}}">{{cat.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Responsable</ion-label>
+      <ion-select [(ngModel)]="ticket.guardian_id">
+        <ion-option *ngFor="let user of usuarios" value="{{user.id}}">{{user.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Transferible</ion-label>
+      <ion-toggle [(ngModel)]="ticket.transferible"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Vencimiento</ion-label>
+      <ion-datetime max="2099" displayFormat="DDD D de MM de YYYY h:mm A" pickerFormat="D M YYYY h mm A" [(ngModel)]="ticket.vencimiento"></ion-datetime>
+    </ion-item>
+
+
+
+    <div *ngIf="api.user.modulos.clientes">
+      <ion-item>
+        <ion-label floating>Cliente</ion-label>
+        <ion-select [(ngModel)]="ticket.cliente_id">
+          <ion-option *ngFor="let cliente of clientes" [value]="cliente.id">{{cliente.full_name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="api.user.modulos.procesos">
+        <ion-item>
+          <ion-label floating>Tipo</ion-label>
+          <ion-select [(ngModel)]="ticket.tipo">
+            <ion-option value="proceso">Proceso</ion-option>
+            <ion-option value="consulta">Consulta</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <div *ngIf="ticket.tipo == 'proceso'">
+          <ion-item>
+            <ion-label floating># Radicado</ion-label>
+            <ion-input [(ngModel)]="proceso.radicado"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Primera instancia Juzgado</ion-label>
+            <ion-input [(ngModel)]="proceso.juzgado_instancia_1"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Segunda Instancia Juzgado</ion-label>
+            <ion-input [(ngModel)]="proceso.juzgado_instancia_2"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Fecha del Proceso</ion-label>
+            <ion-datetime displayFormat="D de MM de YYYY" pickerFormat="D M YYYY" [(ngModel)]="proceso.fecha_proceso"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Demandante</ion-label>
+            <ion-input [(ngModel)]="proceso.demandante"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Demandado</ion-label>
+            <ion-input [(ngModel)]="proceso.demandado"></ion-input>
+          </ion-item>
+        </div>
+
+
+        <div *ngIf="ticket.tipo == 'consulta'">
+          <ion-item>
+            <ion-label floating>Consulta</ion-label>
+            <ion-textarea [(ngModel)]="consulta.consulta"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Respuesta</ion-label>
+            <ion-textarea [(ngModel)]="consulta.respuesta"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Fecha de la Consulta</ion-label>
+            <ion-datetime displayFormat="D de MM de YYYY" pickerFormat="D M YYYY" [(ngModel)]="consulta.fecha_consulta"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>detalles</ion-label>
+            <ion-textarea [(ngModel)]="consulta.detalles"></ion-textarea>
+          </ion-item>
+        </div>
+
+      </div>
+    </div>
+  </ion-list>
+  <button ion-button block [disabled]="rellenado()" color="secondary" (click)="agregarTicket()"> Agregar Ticket {{file != null ? 'con archivo' : '' }} </button>
+</ion-content>

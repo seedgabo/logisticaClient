@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+        <ion-title>
+            Pacientes
+        </ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-searchbar placeholder="Buscar..." cancelButtonText="Cancelar" [(ngModel)]="query" debounce="700" (ionInput)="buscar($event)"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div text-center>
+        <ion-spinner *ngIf="buscando"></ion-spinner>
+    </div>
+    <ion-list>
+        <ion-item-sliding *ngFor="let paciente of pacientes">
+            <button ion-item  (click)="verPaciente(paciente)" (press)="verMenu(paciente)">
+                <ion-avatar item-left>
+                    <img src="{{paciente.foto_url}}" alt="">
+                </ion-avatar>
+                <h2>{{ paciente.full_name}}</h2>
+                <p *ngIf="paciente.medico"><b>Médico:</b> {{ paciente.medico.nombre}}</p>
+            </button>
+            <ion-item-options side="right">
+                <button ion-button color="favorite" (click)="verIncapacidades(paciente)">
+                    <ion-icon name="medical"></ion-icon>
+                    Incapacidades
+                </button>
+                <button ion-button color="secondary" (click)="verCasos(paciente)">
+                    <ion-icon name="briefcase"></ion-icon>
+                    Casos
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>

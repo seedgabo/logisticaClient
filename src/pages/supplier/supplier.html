@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{supplier.nombre}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="container">
+  <ion-card>
+    <ion-list>
+
+      <ion-item>
+        <b>{{ 'literals.name' | trans }}</b>
+        <span item-right>{{supplier.nombre}}</span>
+      </ion-item>
+
+      <ion-item>
+        <b>{{ 'literals.document' | trans }}</b>
+        <span item-right>{{supplier.document}}</span>
+      </ion-item>
+
+      <ion-item>
+        <b>{{ 'literals.email' | trans }}</b>
+        <span item-right>{{supplier.email}}</span>
+      </ion-item>
+
+      <ion-item>
+        <b>{{ 'literals.address' | trans }}</b>
+        <span item-right>{{supplier.direccion}}</span>
+      </ion-item>
+
+      <ion-item>
+        <b>{{ 'literals.type' | trans }}</b>
+        <span>{{supplier.bien_o_servicio}}</span>
+        <span item-right>{{supplier.tipe}}</span>
+      </ion-item>
+
+      <ion-item>
+        <b>{{ 'literals.phone_number' | trans }}</b>
+        <span item-right>{{supplier.telefono}}</span>
+      </ion-item>
+
+
+    </ion-list>
+  </ion-card>
+</ion-content>

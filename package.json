@@ -1,0 +1,113 @@
+{
+  "name": "logistica-client-app",
+  "author": "seedgabo",
+  "homepage": "http://newton.eycproveedores.com/",
+  "private": true,
+  "scripts": {
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "release-android": "ionic cordova build android --prod && code-push release-cordova logistica android -d Android --mandatory",
+    "release-ios": "ionic cordova build ios --prod && code-push release-cordova logistica ios -d Ios --mandatory",
+    "release-web": "ionic cordova build browser --prod",
+    "build-android": "cordova build android --release -- --password=gab23gab --keystore='./logistica.jks' --storePassword=gab23gab --alias=logistica"
+  },
+  "dependencies": {
+    "@angular/common": "^5.2.11",
+    "@angular/compiler": "^5.2.11",
+    "@angular/compiler-cli": "^5.2.11",
+    "@angular/core": "^5.2.11",
+    "@angular/forms": "^5.2.11",
+    "@angular/http": "^5.2.11",
+    "@angular/platform-browser": "^5.2.11",
+    "@angular/platform-browser-dynamic": "^5.2.11",
+    "@ionic-native/camera": "^4.2.1",
+    "@ionic-native/code-push": "^4.2.1",
+    "@ionic-native/core": "^4.2.1",
+    "@ionic-native/file-opener": "^4.7.0",
+    "@ionic-native/file-transfer": "^4.2.1",
+    "@ionic-native/in-app-browser": "^4.2.1",
+    "@ionic-native/push": "^4.2.1",
+    "@ionic-native/splash-screen": "^4.2.1",
+    "@ionic-native/status-bar": "^4.2.1",
+    "@ionic/storage": "^2.1.3",
+    "angular2-moment": "^1.1.0",
+    "code-push": "^2.0.4",
+    "cordova-android": "^6.4.0",
+    "cordova-android-support-gradle-release": "^1.4.3",
+    "cordova-browser": "5.0.3",
+    "cordova-plugin-camera": "^4.0.3",
+    "cordova-plugin-code-push": "^1.11.11",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-dialogs": "^2.0.1",
+    "cordova-plugin-file": "^4.3.3",
+    "cordova-plugin-file-opener2": "^2.0.19",
+    "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-inappbrowser": "^1.7.2",
+    "cordova-plugin-splashscreen": "^4.1.0",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-zip": "^3.1.0",
+    "cordova-sqlite-storage": "^2.3.2",
+    "ionic-angular": "^3.9.2",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionicons": "3.0.0",
+    "laravel-echo": "^1.4.0",
+    "moment": "^2.22.2",
+    "ngx-lightbox": "^1.0.2",
+    "phonegap-plugin-push": "^1.11.1",
+    "rxjs": "5.5.8",
+    "signature_pad": "^3.0.0-beta.3",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.8.20"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "3.1.8",
+    "@types/jquery": "^3.3.2",
+    "ionic": "4.0.1",
+    "typescript": "2.6.2"
+  },
+  "description": "logisticaApp",
+  "cordovaPlugins": [
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard",
+    "phonegap-plugin-push",
+    "cordova-plugin-inappbrowse",
+    "cordova-plugin-file-opener2",
+    "cordova-plugin-file-transfer"
+  ],
+  "cordovaPlatforms": [],
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-camera": {},
+      "cordova-plugin-code-push": {},
+      "cordova-plugin-console": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-file-opener2": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-sqlite-storage": {},
+      "ionic-plugin-keyboard": {},
+      "phonegap-plugin-push": {
+        "SENDER_ID": "AIzaSyALZDfIt-NMdTwApoX5a6SwmEYqpMtoKgQ"
+      },
+      "cordova-plugin-file": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-zip": {},
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      }
+    },
+    "platforms": [
+      "android",
+      "browser"
+    ]
+  }
+}

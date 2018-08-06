@@ -1,0 +1,54 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Caso</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+         <ion-card-header color="favorite">
+             Caso de Paciente <span *ngIf="caso.paciente"> {{caso.paciente.full_name}} </span>
+         </ion-card-header>
+         <ion-list>
+             <ion-item ion-item color="primary"><b>Seguimiento:</b>
+                 <button ion-button color="primary" *ngIf="caso.ticket_id != null " (click)="verSeguimiento(caso)">ir al Seguimiento</button>
+                 <button ion-button prmary *ngIf="caso.ticket_id == null " (click)="iniciarSeguimiento(caso)">Iniciar Seguimiento</button>
+             </ion-item>
+             <ion-item text-wrap><b>Origen del caso: </b><span [innerHtml]="caso.origen_del_caso"></span></ion-item>
+             <ion-item text-wrap><b>Descripción del caso: </b><span [innerHtml]="caso.descripcion"></span></ion-item>
+             <ion-item><b>Fecha de Apertura: </b><span>{{caso.apertura}}</span></ion-item>
+             <ion-item><b>Estado: </b><span>{{caso.estado}}</span></ion-item>
+             <ion-item><b>Médico: </b><span *ngIf="caso.medico">{{caso.medico.nombre}}</span></ion-item>
+             <ion-item><b>Dias Total de Incapacidad: </b><span>{{caso.dias_incapacidad_acumulados}} días</span></ion-item>
+             <ion-item *ngIf="caso.cierre"><b>Fecha Cerrado:</b><span>{{ caso.cierre }}</span></ion-item>
+         </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-card-header color="favorite">
+            Recomendaciones del Caso:
+        </ion-card-header>
+        <ion-list>
+            <ion-item *ngFor="let reco of recomendaciones">
+                <h2 text-center>{{reco.titulo}}</h2>
+                <p text-justify [innerHtml]="reco.descripcion" text-wrap></p>
+                <p text-right>Médico: <span *ngIf="reco.user">{{reco.user.nombre}}</span></p>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-card-header color="favorite">
+            Incapacidades del Caso:
+        </ion-card-header>
+        <ion-list>
+            <button ion-item *ngFor="let incap of incapacidades" (click)="verIncapacidad(incap)">
+                <h2 text-center>Origen: {{incap.origen}}</h2>
+                <p><b>Dias:</b>{{incap.dias_incapacidad}}</p>
+                <p text-right>Médico: <span *ngIf="incap.medico">{{incap.medico.nombre}}</span></p>
+            </button>
+        </ion-list>
+    </ion-card>
+</ion-content>

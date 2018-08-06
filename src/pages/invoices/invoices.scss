@@ -1,0 +1,16 @@
+page-invoices {
+  .emitida,
+  .generada,
+    {
+    color: color($colors, "primary");
+    text-transform: capitalize;
+  }
+  .pagada {
+    color: color($colors, "secondary");
+    text-transform: capitalize;
+  }
+  .rechazada {
+    color: color($colors, "danger");
+    text-transform: capitalize;
+  }
+}

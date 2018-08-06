@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ 'literals.storages' | trans }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="filter()" [debounce]="800" [(ngModel)]="query"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="container-fluid">
+  <ion-list>
+    <button (click)="gotoBodega(storage)" ion-item *ngFor="let storage of bodegas">
+      <h2>{{storage.nombre}}</h2>
+      <span> {{ storage.items?.length }} {{'literals.items' | trans }}</span>
+      <p>{{storage.descripcion}}</p>
+    </button>
+  </ion-list>
+</ion-content>

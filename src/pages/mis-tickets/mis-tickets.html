@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Mis Casos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>Soy El Responsable</ion-list-header>
+        <list-ticket  *ngFor="let ticket of ticketsCreados" [ticket]="ticket"></list-ticket>
+    </ion-list>
+
+    <ion-list>
+        <ion-list-header>Creados por mi</ion-list-header>
+        <list-ticket  *ngFor="let ticket of ticketsResponsables" [ticket]="ticket"></list-ticket>
+    </ion-list>
+
+    <ion-item *ngIf="ticketsCreados && ticketsCreados.length ==0">
+        <h2>No Hay Casos </h2>
+    </ion-item>
+
+</ion-content>

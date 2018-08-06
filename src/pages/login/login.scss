@@ -1,0 +1,30 @@
+.page1 {
+  background-image: url(../assets/img/background-login.png);
+  .login {
+    padding-top: 50px;
+    animation: fadeInUp 1s;
+    -webkit-animation: fadeInUp 1s;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+}

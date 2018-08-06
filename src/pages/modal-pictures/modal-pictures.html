@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title text-capitalize>{{'literals.images' | trans }} |  {{'literals.' + resourceType | trans }} </ion-title>
+    <ion-buttons end>
+      <button ion-button  icon-only clear (click)="dismiss()">
+        <ion-icon name="close"> </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <input type="file" style="display:none" (change)="readFile($event)" multiple capture="camera" id="input-images">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4>
+        <img [src]="resource.foto_url" style="max-height:200px;min-height:100px;" (click)="open(0)">
+      </ion-col>
+
+      <ion-col col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 *ngFor="let image of images; let i=index">
+        <img [src]="image.url" style="max-height:200px;min-height:100px;" (click)="open(i+1)">
+        <button style="position: absolute;top:5%;right:5%" ion-button small color="danger" (click)="deleteImage(image,i)" clear icon-only>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab bottom right>
+      <button ion-fab color="primary" (click)="askFile()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+  </ion-fab>
+</ion-content>
