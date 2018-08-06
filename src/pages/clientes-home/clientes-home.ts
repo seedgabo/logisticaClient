@@ -26,7 +26,17 @@ export class ClientesHome {
   }
 
   gotoOrder(order) {
-    this.navCtrl.push("PedidoPage", { pedido: order });
+    this.navCtrl.push("OrderPage", { pedido: order });
+  }
+
+  createOrder() {
+    let modal = this.modal.create("OrderCreatorPage");
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        //  Execute respective callback
+      }
+    });
   }
 
   toLogin() {
