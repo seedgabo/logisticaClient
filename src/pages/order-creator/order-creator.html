@@ -1,6 +1,13 @@
 <ion-header>
   <ion-navbar color="favorite">
-    <ion-title>Pedido # {{order.numero_pedido}}</ion-title>
+    <ion-title>
+      <span *ngIf="!order.numero_pedido">
+        {{'crud.add' | trans}} {{'literals.order' | trans}}
+      </span>
+      <span *ngIf="order.numero_pedido">
+        {{'literals.order' | trans }} # {{order.numero_pedido}}
+      </span>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -11,6 +18,24 @@
 
 
 <ion-content>
+  <ion-item>
+    <ion-label floating> {{'literals.address' | trans}}</ion-label>
+    <ion-select [(ngModel)]="order.address">
+      <ion-option [value]="address.id" *ngFor="let address of addresses">
+        {{ address.address }}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating> {{'literals.type' | trans}}</ion-label>
+    <ion-select [(ngModel)]="order.tipo">
+      <ion-option value="Residuos Aprovechables">Residuos Aprovechables</ion-option>
+      <ion-option value="Desechos Peligrosos">Desechos Peligrosos</ion-option>
+      <ion-option value="Destrucción">Destrucción</ion-option>
+      <ion-option value="Orgánicos">Orgánicos</ion-option>
+    </ion-select>
+  </ion-item>
+  <!-- Productos -->
   <ion-list no-padding no-margin>
     <ion-list-header>
       {{ 'literals.products' | trans }}

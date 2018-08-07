@@ -14,14 +14,14 @@ export class OrderCreatorPage {
       .local()
       .toDate()
       .toISOString(),
-    numero_pedido: null,
     estado: "pedido",
     fecha_entrega: null,
     user_id: this.api.user.id,
-    entidad_id: null,
-    cliente_id: null,
+    cliente_id: this.api.user.cliente_id,
+    entidad_id: this.api.user.entidad_id,
     items: []
   };
+  addresses = [];
   editing = true;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
     if (this.navParams.get("order")) {
@@ -47,6 +47,9 @@ export class OrderCreatorPage {
         this.api.load("entidades");
         this.api.load("users");
       }
+      this.api.get("clientes/" + this.api.user.cliente_id + "?with[]=addresses").then((data: any) => {
+        this.addresses = data.addresses;
+      });
     });
   }
 

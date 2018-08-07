@@ -18,11 +18,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
-
-
-
-  <!-- Productos -->
   <ion-list>
     <button ion-item (click)="gotoOrder(order)" *ngFor="let order of orders; let i = index">
       <h2>{{ order.numero_pedido }}</h2>
