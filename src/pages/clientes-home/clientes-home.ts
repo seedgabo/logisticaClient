@@ -39,16 +39,6 @@ export class ClientesHome {
     });
   }
 
-  toLogin() {
-    this.api.user = {};
-    this.api.storage.remove("user");
-    this.navCtrl.setRoot(LoginPage);
-  }
-
-  MisFacturas() {
-    this.navCtrl.push(Facturas);
-  }
-
   toNotificaciones() {
     this.navCtrl.push(NotificacionesPage);
   }

@@ -2,13 +2,11 @@
 
   <div class="login">
     <div text-center>
-      <img src="assets/img/logo.png" *ngIf="!prefilled" style="width:100px" alt="">
-      <img [src]="api.url + '/img/logo.png'" *ngIf="prefilled" style="width:100px" alt="">
+      <img src="assets/img/logo.png" *ngIf="!prefilled" style="max-height:80px" alt="">
+      <img [src]="api.url + '/img/logo.png'" *ngIf="prefilled" style="max-height:80px" alt="">
     </div>
-    <br>
-    <h1 text-center color="primary"> Iniciar Sesión</h1>
+    <h3 text-center color="primary"> Iniciar Sesión</h3>
     <div padding>
-      <!-- <form> -->
       <ion-item *ngIf="!prefilled" style="background:rgba(255,255,255,0.3)">
         <ion-label floating>URL</ion-label>
         <ion-input type="url" [(ngModel)]="api.url"></ion-input>

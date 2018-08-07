@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController } from "ionic-angular";
+import { IonicPage, NavParams, ModalController, ViewController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import moment from "moment";
 import { ProductSearchPage } from "../product-search/product-search";
@@ -23,8 +23,7 @@ export class OrderCreatorPage {
     items: []
   };
   editing = true;
-  advanced = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
       console.log(this.order);
@@ -51,21 +50,18 @@ export class OrderCreatorPage {
     });
   }
 
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
   save() {
     var promise;
     var data = {
       numero_pedido: this.order.numero_pedido ? this.order.numero_pedido : undefined,
-      fecha_pedido: this.order.fecha_pedido
-        ? moment(this.order.fecha_pedido)
-            .local()
-            .format("YYYY-MM-DD HH:mm:ss")
-        : undefined,
+      fecha_pedido: moment(this.order.fecha_pedido)
+        .local()
+        .format("YYYY-MM-DD HH:mm:ss"),
       estado: this.order.estado,
-      fecha_entrega: this.order.fecha_entrega
-        ? moment(this.order.fecha_entrega)
-            .local()
-            .format("YYYY-MM-DD HH:mm:ss")
-        : undefined,
       user_id: this.order.user_id ? this.order.user_id : this.api.user.id,
       entidad_id: this.order.entidad_id,
       cliente_id: this.order.cliente_id,
@@ -80,7 +76,7 @@ export class OrderCreatorPage {
       .then((resp) => {
         this.order = resp;
         this.editing = false;
-        this.navCtrl.pop();
+        this.viewCtrl.dismiss(this.order);
       })
       .catch((err) => {
         this.api.error(err);

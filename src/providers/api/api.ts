@@ -32,11 +32,12 @@ export class Api {
     window.$api = this;
     this.initVar();
     this.ready.then(() => {
-      this.get("lang")
-        .then((langs) => {
-          this.langs = langs;
-        })
-        .catch(console.error);
+      if (this.user)
+        this.get("lang")
+          .then((langs) => {
+            this.langs = langs;
+          })
+          .catch(console.error);
     });
   }
 

@@ -1,47 +1,28 @@
-<ion-menu [content]="mycontent">
-  <ion-content>
-    <div class="logo-header">
-      <div text-center>
-        <img src="assets/img/logo-completo.png" alt="logo">
-      </div>
-    </div>
-    <ion-list>
-      <ion-list-header>
-        <ion-icon name="menu" item-left></ion-icon> Menu
-      </ion-list-header>
-
-      <button ion-item menuClose (click)="MisFacturas()">
-        <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis Facturas
-      </button>
-      <button ion-item menuClose (click)="toLogin()">
-        <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-buttons left>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{api.user.cliente? api.user.cliente.full_name: api.user.nombre }}</ion-title>
+    <ion-title>{{ 'literals.orders' | trans }}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="toNotificaciones()">
+      <button icon-only clear ion-button (click)="toNotificaciones()">
         <ion-icon name="notifications"></ion-icon>
         <ion-badge>{{api.user.notificaciones_count}}</ion-badge>
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" [placeholder]="'Buscar Ordenes...'" [animated]="true"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
+<ion-content>
 
 
-<ion-content #mycontent>
-  <ion-searchbar [(ngModel)]="query"></ion-searchbar>
+
+
+  <!-- Productos -->
   <ion-list>
     <button ion-item (click)="gotoOrder(order)" *ngFor="let order of orders; let i = index">
       <h2>{{ order.numero_pedido }}</h2>
@@ -50,5 +31,11 @@
       <p>{{order.created_at | amLocale:'es-us' | amCalendar }}</p>
       <!-- <h3>{{ order.order_compra }}</h3> -->
     </button>
+    <ion-fab bottom right>
+      <button ion-fab (click)="createOrder()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
   </ion-list>
+
 </ion-content>

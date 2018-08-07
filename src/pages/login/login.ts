@@ -48,12 +48,7 @@ export class LoginPage {
             if (data.modulos.clientes && data.iscliente) {
               this.navController.setRoot(ClientesHome);
             } else {
-              this.navController.setRoot(TabsPage);
-              this.events.publish("login", {});
-            }
-
-            if (!this.api.user.first_login) {
-              this.modal.create("PasswordChangePage").present();
+              this.alert.create({ title: "Error", message: "Solo para clientes", buttons: ["ok"] }).present();
             }
             try {
               this.api.pushRegister();

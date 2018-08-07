@@ -1,9 +1,15 @@
 .page1 {
-  background-image: url(../assets/img/background-login.png);
+  background-image: url(../assets/img/background-login.jpg);
+  text-align: center;
   .login {
-    padding-top: 50px;
+    padding-top: 15px;
+    margin: 0 auto;
+    margin-top: 50px;
     animation: fadeInUp 1s;
     -webkit-animation: fadeInUp 1s;
+    background-color: #fff;
+    max-width: 400px;
+    width: auto;
   }
 }
 

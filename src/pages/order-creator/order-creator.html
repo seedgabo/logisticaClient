@@ -2,56 +2,53 @@
   <ion-navbar color="favorite">
     <ion-title>Pedido # {{order.numero_pedido}}</ion-title>
     <ion-buttons end>
-      <button ion-button clear color="primary" (click)="advanced =!advanced">
-        {{ !advanced ? 'Normal' : 'Avanzado'}}
+      <button ion-button icon-only clear (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <div>
+<ion-content>
+  <ion-list no-padding no-margin>
+    <ion-list-header>
+      {{ 'literals.products' | trans }}
+    </ion-list-header>
+    <ion-grid *ngFor="let item of order.items; let i = index">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>{{'literals.name' | trans}}</ion-label>
+            <ion-input [(ngModel)]="item.name" [placeholder]=" 'literals.name' | trans"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>{{'literals.amount' | trans}}</ion-label>
+            <ion-input [(ngModel)]="item.precio" type="number" min="0" [placeholder]=" 'literals.amount' | trans"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+            <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" min="1" [placeholder]=" 'literals.quantity' | trans"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-1>
+          <button ion-button color="danger" clear icon-only (click)="removeItem(i)">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-    <ion-list no-padding no-margin>
-      <div>
-        <ion-grid *ngFor="let item of order.items; let i = index">
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label floating>{{'literals.name' | trans}}</ion-label>
-                <ion-input [(ngModel)]="item.name" [placeholder]=" 'literals.name' | trans"></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label floating>{{'literals.amount' | trans}}</ion-label>
-                <ion-input [(ngModel)]="item.precio" type="number" min="0" [placeholder]=" 'literals.amount' | trans"></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
-                <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" min="1" [placeholder]=" 'literals.quantity' | trans"></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col col-1>
-              <button ion-button color="danger" clear icon-only (click)="removeItem(i)">
-                <ion-icon name="remove"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-      <ion-item>
-        <button (click)="addItem()" ion-fab small mini item-right>
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-item>
-    </ion-list>
-
-
-  </div>
+    <ion-fab right>
+      <button (click)="addItem()" ion-fab mini>
+        <ion-icon name="add" item-left></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-list>
 </ion-content>
 
 <ion-footer>
