@@ -93,6 +93,12 @@
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.3">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
+    <platform name="android">
+        <preference name="CodePushDeploymentKey" value="64aaCqHkxbCHrRv52KyRgMLcFqnJc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
+    </platform>
+    <platform name="ios">
+        <preference name="CodePushDeploymentKey" value="VRMxpErlzruTXtsf2eh9Y0OtNK7Zc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
+    </platform>
     <engine name="android" spec="^6.4.0" />
     <engine name="browser" spec="5.0.3" />
 </widget>
