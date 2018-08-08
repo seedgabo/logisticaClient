@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.seedg.newtonapp363174" version="2.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Newton App</name>
-    <description>Newton App en tu bolsillo</description>
+<widget id="com.seedgabo.logisticaclient" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Logistica Ambiental App</name>
+    <description>Logistica Ambiental App</description>
     <author email="seedgabo@gmail.com" href="http://newton.eycproveedores.com/">Gabriel Bejarano</author>
     <content src="index.html" />
     <access origin="*" />
