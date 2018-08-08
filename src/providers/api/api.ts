@@ -13,7 +13,7 @@ export class Api {
   password: string;
   token: string;
   url: string = "http://newton.eycproveedores.com/newton/public/";
-  user: any = { token: null };
+  user: any = null;
   pushData: any;
   objects: any = {};
   langs = {};
@@ -157,7 +157,7 @@ export class Api {
     this.storage.get("username").then((data) => (this.username = data));
     this.storage.get("password").then((data) => (this.password = data));
     this.storage.get("user").then((data) => {
-      data != undefined ? (this.user = data) : {};
+      this.user = data ? data : null;
       this.resolve(this.user);
     });
   }
