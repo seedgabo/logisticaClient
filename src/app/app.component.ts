@@ -16,6 +16,7 @@ import { Clientes } from "../pages/clientes/clientes";
 import { NotificacionesPage } from "../pages/notificaciones/notificaciones";
 import { BuscadorPage } from "../pages/buscador/buscador";
 import { Calendar } from "../pages/calendar/calendar";
+import { Facturas } from "../pages/facturas/facturas";
 @Component({
   templateUrl: `./app.html`
 })
@@ -42,32 +43,30 @@ export class MyApp {
     public codepush: CodePush,
     public events: Events
   ) {
+    this.api.ready.then((data) => {
+      if (!this.api.user) {
+        this.rootPage = LoginPage;
+        return;
+      }
+      if (this.api.user.modulos.clientes && this.api.user.iscliente) this.rootPage = ClientesHome;
+      else this.rootPage = TabsPage;
+      this.can();
+      this.api
+        .doLogin()
+        .then((user) => {
+          this.api.user = user;
+          this.api.saveUser(user);
+        })
+        .catch(console.error);
+    });
     platform.ready().then(() => {
-      this.api.storage.get("user").then((data) => {
-        if (data == undefined) this.rootPage = LoginPage;
-        else {
-          if (data.modulos.clientes && data.iscliente) {
-            this.rootPage = ClientesHome;
-          } else {
-            this.rootPage = TabsPage;
-            this.api.ready.then(() => {
-              this.can();
-            });
-          }
-        }
-      });
-
       this.events.subscribe("login", () => {
         this.api.ready.then(() => {
           this.can();
         });
       });
       this.splashscreen.hide();
-      this.statusbar.styleDefault();
-      const downloadProgress = (progress) => {
-        console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`);
-      };
-      this.codepush.sync({ updateDialog: false, installMode: InstallMode.IMMEDIATE }, downloadProgress).subscribe(
+      this.codepush.sync({ updateDialog: false, installMode: InstallMode.IMMEDIATE }, console.log).subscribe(
         (syncStatus) => console.log(syncStatus),
         (err) => {
           console.warn(err);
@@ -173,5 +172,9 @@ export class MyApp {
     if (!roles["Administrar Minutas"]) {
       this.modulos.anotaciones = false;
     }
+  }
+
+  MisFacturas() {
+    this.navCtrl.push(Facturas);
   }
 }

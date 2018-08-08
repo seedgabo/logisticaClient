@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController } from "ionic-angular";
+import { IonicPage, NavParams, ModalController, ViewController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import moment from "moment";
 import { ProductSearchPage } from "../product-search/product-search";
@@ -14,17 +14,16 @@ export class OrderCreatorPage {
       .local()
       .toDate()
       .toISOString(),
-    numero_pedido: null,
     estado: "pedido",
     fecha_entrega: null,
     user_id: this.api.user.id,
-    entidad_id: null,
-    cliente_id: null,
+    cliente_id: this.api.user.cliente_id,
+    entidad_id: this.api.user.entidad_id,
     items: []
   };
+  addresses = [];
   editing = true;
-  advanced = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
       console.log(this.order);
@@ -48,24 +47,24 @@ export class OrderCreatorPage {
         this.api.load("entidades");
         this.api.load("users");
       }
+      this.api.get("clientes/" + this.api.user.cliente_id + "?with[]=addresses").then((data: any) => {
+        this.addresses = data.addresses;
+      });
     });
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 
   save() {
     var promise;
     var data = {
       numero_pedido: this.order.numero_pedido ? this.order.numero_pedido : undefined,
-      fecha_pedido: this.order.fecha_pedido
-        ? moment(this.order.fecha_pedido)
-            .local()
-            .format("YYYY-MM-DD HH:mm:ss")
-        : undefined,
+      fecha_pedido: moment(this.order.fecha_pedido)
+        .local()
+        .format("YYYY-MM-DD HH:mm:ss"),
       estado: this.order.estado,
-      fecha_entrega: this.order.fecha_entrega
-        ? moment(this.order.fecha_entrega)
-            .local()
-            .format("YYYY-MM-DD HH:mm:ss")
-        : undefined,
       user_id: this.order.user_id ? this.order.user_id : this.api.user.id,
       entidad_id: this.order.entidad_id,
       cliente_id: this.order.cliente_id,
@@ -80,7 +79,7 @@ export class OrderCreatorPage {
       .then((resp) => {
         this.order = resp;
         this.editing = false;
-        this.navCtrl.pop();
+        this.viewCtrl.dismiss(this.order);
       })
       .catch((err) => {
         this.api.error(err);
