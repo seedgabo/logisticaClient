@@ -7,7 +7,9 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "release-android": "ionic cordova build android --prod && code-push release-cordova logistica-client android -d Android --mandatory",
+    "release-only-android": "cordova build android --prod && code-push release-cordova logistica-client android -d Android --mandatory",
     "release-ios": "ionic cordova build ios --prod && code-push release-cordova logistica-client ios -d Ios --mandatory",
+    "release-only-ios": "cordova build ios --prod && code-push release-cordova logistica-client ios -d Ios --mandatory",
     "release-web": "ionic cordova build browser --prod",
     "build-android": "cordova build android --release -- --password=gab23gab --keystore='./logistica.jks' --storePassword=gab23gab --alias=logistica"
   },
