@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{ 'literals.orders' | trans }}</ion-title>
+    <ion-title>{{ api.trans('literals.orders') }}</ion-title>
     <ion-buttons end>
       <button icon-only clear ion-button (click)="toNotificaciones()">
         <ion-icon name="notifications"></ion-icon>
@@ -14,15 +14,34 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
-    <ion-searchbar [(ngModel)]="query" [placeholder]="'Buscar Ordenes...'" [animated]="true"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="filter()" [debounce]="750" [placeholder]="'Buscar Ordenes...'"
+      [animated]="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-refresher (ionRefresh)="getOrders($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <button ion-item (click)="gotoOrder(order)" *ngFor="let order of orders; let i = index">
-      <h2>{{ order.numero_pedido }}</h2>
-      <h3>{{ order.estado }}</h3>
-      <h4>{{ order.tipo }}</h4>
+      <h2>
+        <b>
+          Numero:
+        </b>
+        {{ order.numero_pedido }}
+      </h2>
+      <h3>
+        <b>
+          {{api.trans('literals.status')}}:
+        </b>
+        {{ order.estado }}
+      </h3>
+      <h4>
+        <b>
+          {{api.trans('literals.type')}}:
+        </b>
+        {{ order.tipo }}
+      </h4>
       <p>{{order.created_at | amLocale:'es-us' | amCalendar }}</p>
       <!-- <h3>{{ order.order_compra }}</h3> -->
     </button>

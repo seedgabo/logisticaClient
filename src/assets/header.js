@@ -1,1 +1,1 @@
-window.url = "http://newton.eycproveedores.com/logistica/public/"
+window.url = "http://newton.eycproveedores.com/logistica2/public/"

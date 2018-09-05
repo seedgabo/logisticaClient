@@ -12,17 +12,41 @@ declare var moment: any;
 })
 export class ClientesHome {
   orders = [];
+  _orders = [];
   query: string = "";
   constructor(public navCtrl: NavController, public api: Api, public modal: ModalController) {}
 
-  ionViewDidLoad() {}
+  ionViewDidEnter() {
+    this.getOrders();
+  }
 
-  getOrders() {
+  getOrders(refresher = null) {
     this.api
-      .get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&paginate=150&order[updated_at]=&order[status]=desc`)
+      .get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&paginate=150&order[updated_at]=&order[estado]=desc`)
       .then((data: any) => {
-        this.orders = data;
+        this._orders = data.data;
+        this.filter();
+        if (refresher) {
+          refresher.complete();
+        }
+      })
+      .catch((err) => {
+        if (refresher) {
+          refresher.complete();
+        }
       });
+  }
+
+  filter() {
+    if (this.query == "") {
+      return (this.orders = this._orders);
+    }
+    var q = this.query.toLowerCase();
+    this.orders = this._orders.filter((o) => {
+      return (
+        o.numero_pedido.toLowerCase().indexOf(q) > -1 || o.estado.toLowerCase().indexOf(q) > -1 || o.tipo.toLowerCase().indexOf(q) > -1
+      );
+    });
   }
 
   gotoOrder(order) {
@@ -34,7 +58,7 @@ export class ClientesHome {
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {
-        //  Execute respective callback
+        this.getOrders();
       }
     });
   }

@@ -24,7 +24,8 @@
           <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis {{ api.trans('literals.tickets') }}
         </button>
         <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="TicketTodos()">
-          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Todos Los {{ api.trans('literals.tickets') }}
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Todos Los {{ api.trans('literals.tickets')
+          }}
         </button>
 
         <ion-item-divider color="light">
@@ -44,7 +45,7 @@
           <ion-icon name="medkit" item-right color="primary"></ion-icon> {{api.trans('literals.Historias Clinicas')}}
         </button>
 
-        <button ion-item menuClose detail-none no (click)="gotoClientes()" *ngIf="modulos.clientes">
+        <button ion-item menuClose detail-none no (click)="gotoClientes()" *ngIf="modulos.facturas">
           <ion-icon name="contacts" item-right color="primary"></ion-icon> {{api.trans('literals.clients')}}
         </button>
 
@@ -76,6 +77,7 @@
           <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
         </button>
       </ion-list>
+
     </ion-content>
     <ion-footer text-center>
       <div class="logo-header">

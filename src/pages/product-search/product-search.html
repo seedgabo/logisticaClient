@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title>{{'Productos'}}</ion-title>
+    <ion-title>{{'literals.products' | trans }}</ion-title>
     <ion-buttons end>
       <button ion-button clear icon-only (click)="cancel()">
         <ion-icon name="close"></ion-icon>
@@ -8,21 +8,34 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
-    <ion-searchbar (ionInput)="search()" [(ngModel)]="query"></ion-searchbar>
+    <ion-searchbar [disabled]="!categoria" (ionInput)="search()" [(ngModel)]="query"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div text-center>
     <ion-spinner *ngIf="loading || !ready"></ion-spinner>
   </div>
-  <ion-list inset no-lines>
-    <button ion-item (click)="select(product)" *ngFor="let product of products">
-      <ion-thumbnail item-left *ngIf="product.image">
-        <img [src]="product.image.url">
+  <ion-list *ngIf="!categoria">
+    <button ion-item (click)="selectCat(cat)" *ngFor="let cat of categorias">
+      <ion-thumbnail item-left>
+        <img [src]="cat.image_url" *ngIf="cat.image_url">
+      </ion-thumbnail>
+      <h2>{{cat.nombre}}</h2>
+    </button>
+  </ion-list>
+
+  <ion-list *ngIf="categoria">
+    <button small ion-button block clear icon-left *ngIf="categoria" (click)="categoria = null">
+      <ion-icon name="arrow-round-back"></ion-icon>
+      {{'Volver a categorias'}}
+    </button>
+    <button ion-item (click)="select(product)" *ngFor="let product of productos">
+      <ion-thumbnail item-left>
+        <img [src]="product.image_url" *ngIf="product.image_url">
       </ion-thumbnail>
       <h2>{{product.name}}</h2>
       <h3>{{product.description}}</h3>
-      <!-- <p>{{product.price | currency:'USD':'symbol-narrow':'1.0-0'}}</p> -->
+      <p>{{product.categoria?.nombre}}</p>
     </button>
   </ion-list>
 </ion-content>

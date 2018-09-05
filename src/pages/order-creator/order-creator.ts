@@ -16,11 +16,14 @@ export class OrderCreatorPage {
       .toISOString(),
     estado: "pedido",
     fecha_entrega: null,
+    direccion_envio: null,
     user_id: this.api.user.id,
     cliente_id: this.api.user.cliente_id,
     entidad_id: this.api.user.entidad_id,
     items: []
   };
+  loading = false;
+  tipos = ["Residuos Aprovechables", "Desechos Peligrosos", "Destrucción", "Orgánicos"];
   addresses = [];
   editing = true;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
@@ -42,13 +45,11 @@ export class OrderCreatorPage {
 
   ionViewDidLoad() {
     this.api.ready.then((user) => {
-      if (user) {
-        this.api.load("clientes");
-        this.api.load("entidades");
-        this.api.load("users");
-      }
       this.api.get("clientes/" + this.api.user.cliente_id + "?with[]=addresses").then((data: any) => {
         this.addresses = data.addresses;
+        if (this.addresses.length > 0) {
+          this.order.direccion_envio = this.addresses[this.addresses.length - 1].address;
+        }
       });
     });
   }
@@ -57,10 +58,46 @@ export class OrderCreatorPage {
     this.viewCtrl.dismiss();
   }
 
-  save() {
+  addAddress() {
+    this.api.alert
+      .create({
+        title: this.api.trans("crud.add") + " " + this.api.trans("literals.address"),
+        inputs: [
+          {
+            type: "text",
+            placeholder: this.api.trans("literals.address"),
+            value: "",
+            name: "address"
+          }
+        ],
+        buttons: [
+          this.api.trans("cancel"),
+          {
+            text: this.api.trans("crud.save"),
+            handler: (data) => {
+              if (data) {
+                this.api.post("addresses", data).then((resp: any) => {
+                  this.api.post(`addresses/add-cliente/${resp.id}/${this.api.user.cliente_id}`, {}).then((data) => {
+                    this.ionViewDidLoad();
+                  });
+                });
+              }
+            }
+          }
+        ]
+      })
+      .present();
+  }
+
+  async save() {
+    this.loading = true;
+    var count: any = await this.api.get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&count=1`).catch((err) => {
+      this.loading = false;
+    });
     var promise;
     var data = {
-      numero_pedido: this.order.numero_pedido ? this.order.numero_pedido : undefined,
+      numero_pedido: `${this.tipos.indexOf(this.order.tipo) + 1}-${this.api.user.cliente.document}-${count + 1}`,
+      direccion_envio: this.order.direccion_envio,
       fecha_pedido: moment(this.order.fecha_pedido)
         .local()
         .format("YYYY-MM-DD HH:mm:ss"),
@@ -80,8 +117,10 @@ export class OrderCreatorPage {
         this.order = resp;
         this.editing = false;
         this.viewCtrl.dismiss(this.order);
+        this.loading = false;
       })
       .catch((err) => {
+        this.loading = false;
         this.api.error(err);
       });
   }
@@ -92,6 +131,7 @@ export class OrderCreatorPage {
     modal.onDidDismiss((data, role) => {
       if (role !== "cancel") {
         console.log(data, role);
+        data.cantidad_pedidos = 1;
         this._addItem(data);
       }
     });
@@ -114,6 +154,6 @@ export class OrderCreatorPage {
   }
 
   canSave() {
-    return this.order.items && this.order.items.length > 0 && this.order.cliente_id;
+    return this.order.direccion_envio && this.order.tipo && this.order.items && this.order.items.length > 0 && this.order.cliente_id;
   }
 }

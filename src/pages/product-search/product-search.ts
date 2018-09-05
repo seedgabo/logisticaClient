@@ -7,18 +7,16 @@ import { Api } from "../../providers/api/api";
 })
 export class ProductSearchPage {
   query = "";
-  products = [];
+  productos = [];
+  categorias = [];
   loading = false;
   ready = false;
   local = true;
+  categoria = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
-    this.api.storage.get("recent_products").then((recent_products) => {
-      if (recent_products) {
-        this.products = recent_products;
-      }
-    });
-    this.api.load("productos").then(() => {
+    this.api.load("categorias-productos?with[]=productos").then((resp: any) => {
       this.ready = true;
+      this.categorias = resp;
     });
   }
 
@@ -32,9 +30,8 @@ export class ProductSearchPage {
     var limit = 100;
     var results = [];
     var filter = this.query.toLowerCase();
-    for (var i = 0; i < this.api.objects.products.length; i++) {
-      var item = this.api.objects.products[i];
-      console.log(item);
+    for (var i = 0; i < this.categoria.productos.length; i++) {
+      var item = this.categoria.productos[i];
       if (item.name && item.name.toLowerCase().indexOf(filter) > -1) {
         results.push(item);
       }
@@ -42,8 +39,12 @@ export class ProductSearchPage {
         break;
       }
     }
-    this.products = results;
-    this.api.storage.set("recent_products", this.products);
+    this.productos = results;
+  }
+
+  selectCat(cat) {
+    this.categoria = cat;
+    this.searchLocal();
   }
 
   cancel() {

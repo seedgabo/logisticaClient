@@ -45,7 +45,7 @@ export class LoginPage {
             })
             .catch(console.error);
           loader.dismiss().then(() => {
-            if (data.modulos.clientes && data.iscliente) {
+            if (data.cliente) {
               this.navController.setRoot(ClientesHome);
             } else {
               this.alert.create({ title: "Error", message: "Solo para clientes", buttons: ["ok"] }).present();
