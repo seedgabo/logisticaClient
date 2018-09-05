@@ -5,9 +5,10 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "ionic-angular";
 import { PipesModule } from "../pipes/pipes.module";
 import { SignatureComponent } from "./signature/signature";
+import { ImageInputComponent } from "./image-input/image-input";
 @NgModule({
-  declarations: [SignatureComponent],
+  declarations: [SignatureComponent,ImageInputComponent],
   imports: [CommonModule, FormsModule, IonicModule, PipesModule],
-  exports: [SignatureComponent]
+  exports: [SignatureComponent,ImageInputComponent]
 })
 export class ComponentsModule {}

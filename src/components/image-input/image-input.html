@@ -1,0 +1,15 @@
+<div text-center *ngIf="file?.preview">
+  <img (click)="askFile()" [src]="file?.preview" style="margin:0 auto; height:75px;border-radius:20px;">
+  <br>
+  <button ion-button color="danger" (click)="remove()" clear small icon-only>
+    <ion-icon name="remove"></ion-icon>
+  </button>
+</div>
+
+<div text-center *ngIf="placeholder && !file">
+  <img (click)="askFile()" [src]="placeholder" style="margin:0 auto; height:75px;border-radius:20px;">
+</div>
+<button *ngIf="!file?.preview" icon-right ion-button (click)="askFile()" [clear]="clear" [color]="color" block [large]="large">
+  {{ label }}
+  <ion-icon name="camera"></ion-icon>
+</button>

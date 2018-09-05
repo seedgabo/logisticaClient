@@ -32,12 +32,12 @@
     </button>
   </div>
 
-  <ion-item-divider>
+  <ion-item>
     <ion-label floating> {{'literals.type' | trans}}</ion-label>
     <ion-select [(ngModel)]="order.tipo">
       <ion-option [value]="tipo" *ngFor="let tipo of tipos"> {{ tipo }}</ion-option>
     </ion-select>
-  </ion-item-divider>
+  </ion-item>
 
   <!-- Productos -->
   <ion-list no-padding no-margin>
@@ -54,7 +54,13 @@
         </ion-col>
         <ion-col align-self-center>
           <ion-item>
-            <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+            <ion-label floating>
+              {{'literals.quantity' | trans}}
+              <span *ngIf="item.unit">
+                ({{ item.unit.short }})
+              </span>
+
+            </ion-label>
             <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" step="any" min="1"></ion-input>
           </ion-item>
         </ion-col>
@@ -72,6 +78,12 @@
       </button>
     </ion-fab>
   </ion-list>
+
+  <div>
+    <br><br>
+    <image-input [(ngModel)]="image" [clear]="true" color="primary"></image-input>
+  </div>
+
 </ion-content>
 
 <ion-footer>

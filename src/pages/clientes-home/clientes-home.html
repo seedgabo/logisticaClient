@@ -45,11 +45,11 @@
       <p>{{order.created_at | amLocale:'es-us' | amCalendar }}</p>
       <!-- <h3>{{ order.order_compra }}</h3> -->
     </button>
-    <ion-fab bottom right>
-      <button ion-fab (click)="createOrder()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab>
   </ion-list>
 
+  <ion-fab bottom right>
+    <button ion-fab (click)="createOrder()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

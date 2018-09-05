@@ -23,6 +23,7 @@ export class OrderCreatorPage {
     entidad_id: this.api.user.entidad_id,
     items: []
   };
+  image = null;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
   addresses = [];

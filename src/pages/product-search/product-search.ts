@@ -14,7 +14,7 @@ export class ProductSearchPage {
   local = true;
   categoria = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
-    this.api.load("categorias-productos?with[]=productos").then((resp: any) => {
+    this.api.load("categorias-productos?with[]=productos.unit").then((resp: any) => {
       this.ready = true;
       this.categorias = resp;
     });
