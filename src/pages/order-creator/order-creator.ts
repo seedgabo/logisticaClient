@@ -95,9 +95,14 @@ export class OrderCreatorPage {
     var count: any = await this.api.get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&count=1`).catch((err) => {
       this.loading = false;
     });
+    function pad(n, width, z = "0") {
+      n = n + "";
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+    count = pad(++count, 3);
     var promise;
     var data = {
-      numero_pedido: `${this.tipos.indexOf(this.order.tipo) + 1}-${this.api.user.cliente.document}-${count + 1}`,
+      numero_pedido: `01/${this.api.user.cliente.document}/0${this.tipos.indexOf(this.order.tipo) + 1}/${count}`,
       direccion_envio: this.order.direccion_envio,
       tipo: this.order.tipo,
       fecha_pedido: moment(this.order.fecha_pedido)

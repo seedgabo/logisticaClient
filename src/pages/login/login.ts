@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, AlertController, LoadingController, ModalController, Events } from "ionic-angular";
 import { Api } from "../../providers/api/api";
-import { TabsPage } from "../tabs/tabs";
 import { ClientesHome } from "../clientes-home/clientes-home";
 declare var window: any;
 @Component({

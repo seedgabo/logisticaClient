@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { LoginPage } from "../login/login";
 import { Calendar } from "../calendar/calendar";
 import { NavController, ModalController, ToastController, Platform } from "ionic-angular";
 import { Api } from "../../providers/api/api";
