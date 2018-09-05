@@ -21,6 +21,26 @@ export class Api {
   ready = new Promise((resolve) => {
     this.resolve = resolve;
   });
+  storage = {
+    ready: () => {
+      return this._storage.ready();
+    },
+    get: (key) => {
+      var prefix = window.url ? window.url : "";
+      return this._storage.get(prefix + key);
+    },
+    set: (key, value) => {
+      var prefix = window.url ? window.url : "";
+      return this._storage.set(prefix + key, value);
+    },
+    remove: (key) => {
+      var prefix = window.url ? window.url : "";
+      return this._storage.remove(prefix + key);
+    },
+    clear: () => {
+      return this._storage.clear();
+    }
+  };
   constructor(
     public http: Http,
     private platform: Platform,
@@ -772,7 +792,11 @@ export class Api {
 
   private setHeaders() {
     let headers = new Headers();
-    headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));
+    if (this.user.token) {
+      headers.append("Auth-Token", this.user.token);
+    } else {
+      headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));
+    }
     return headers;
   }
 
