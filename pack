@@ -1,11 +1,6 @@
 #!/bin/bash
-# a Sample bash script
-if [ -z "$1" ]
-  then
-    echo "No argument supplied"
-    exit
-fi
 cd ./platforms/browser/www
+rsync -avz --delete . "gabriel@newton.eycproveedores.com:htdocs/logistica/web"
 rsync -avz --delete . "gabriel@newton.eycproveedores.com:htdocs/logistica2/web"
 echo "syncronized"
 cd ../../../
