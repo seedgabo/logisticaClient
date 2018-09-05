@@ -1,11 +1,7 @@
 import { Component } from "@angular/core";
 import { NavController, ModalController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
-import { LoginPage } from "../login/login";
-import { TicketPage } from "../ticket/ticket";
 import { NotificacionesPage } from "../notificaciones/notificaciones";
-import { Facturas } from "../facturas/facturas";
-declare var moment: any;
 @Component({
   selector: "page-clientes-home",
   templateUrl: "clientes-home.html"
