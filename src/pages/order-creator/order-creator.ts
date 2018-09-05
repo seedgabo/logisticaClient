@@ -14,6 +14,7 @@ export class OrderCreatorPage {
       .local()
       .toDate()
       .toISOString(),
+    tipo: "Residuos Aprovechables",
     estado: "pedido",
     fecha_entrega: null,
     direccion_envio: null,
@@ -23,7 +24,7 @@ export class OrderCreatorPage {
     items: []
   };
   loading = false;
-  tipos = ["Residuos Aprovechables", "Desechos Peligrosos", "Destrucción", "Orgánicos"];
+  tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
   addresses = [];
   editing = true;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
@@ -98,6 +99,7 @@ export class OrderCreatorPage {
     var data = {
       numero_pedido: `${this.tipos.indexOf(this.order.tipo) + 1}-${this.api.user.cliente.document}-${count + 1}`,
       direccion_envio: this.order.direccion_envio,
+      tipo: this.order.tipo,
       fecha_pedido: moment(this.order.fecha_pedido)
         .local()
         .format("YYYY-MM-DD HH:mm:ss"),
