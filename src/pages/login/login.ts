@@ -37,7 +37,7 @@ export class LoginPage {
     this.api
       .doLogin()
       .then((data: any) => {
-        if (data.nombre) {
+        if (data) {
           this.api
             .get("lang")
             .then((langs) => {

@@ -2,12 +2,12 @@
   background-image: url(../assets/img/background-login.jpg);
   text-align: center;
   .login {
-    padding-top: 15px;
+    padding-top: 20px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 15%;
     animation: fadeInUp 1s;
     -webkit-animation: fadeInUp 1s;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, .9);
     max-width: 400px;
     width: auto;
   }

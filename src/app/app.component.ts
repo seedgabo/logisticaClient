@@ -44,7 +44,7 @@ export class MyApp {
     public events: Events
   ) {
     this.api.ready.then((data) => {
-      if (!this.api.user) {
+      if (!this.api.user || !this.api.user.id) {
         this.rootPage = LoginPage;
         return;
       }
