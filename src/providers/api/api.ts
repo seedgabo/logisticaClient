@@ -44,7 +44,7 @@ export class Api {
   constructor(
     public http: Http,
     private platform: Platform,
-    public storage: Storage,
+    public _storage: Storage,
     public push: Push,
     public transfer: FileTransfer,
     public alert: AlertController
@@ -482,6 +482,7 @@ export class Api {
         );
     });
   }
+  
   getPacientes(query = "") {
     return new Promise((resolve, reject) => {
       this.http
@@ -792,7 +793,7 @@ export class Api {
 
   private setHeaders() {
     let headers = new Headers();
-    if (this.user.token) {
+    if (this.user && this.user.token) {
       headers.append("Auth-Token", this.user.token);
     } else {
       headers.append("Authorization", "Basic " + btoa(this.username + ":" + this.password));

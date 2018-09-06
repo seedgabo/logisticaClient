@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { NavController, AlertController, LoadingController, ModalController, Events } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import { ClientesHome } from "../clientes-home/clientes-home";
-import { ConductorHomePage } from "../conductor-home/conductor-home";
 declare var window: any;
 @Component({
   templateUrl: "login.html"
@@ -48,7 +47,7 @@ export class LoginPage {
             if (data.cliente) {
               this.navController.setRoot(ClientesHome);
             } else if (data.conductor) {
-              this.navController.setRoot(ConductorHomePage);
+              this.navController.setRoot("ConductorHomePage");
             } else {
               this.alert.create({ title: "Error", message: "Solo para clientes", buttons: ["ok"] }).present();
             }

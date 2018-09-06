@@ -21,6 +21,14 @@ export class ConductorHomePage {
     week: [],
     next: []
   };
+  trans = {
+    past: "Pasadas",
+    yesterday: "Ayer",
+    today: "Hoy",
+    tomorrow: "Manana",
+    week: "Esta Semana",
+    next: "Programadas"
+  };
   constructor(public navCtrl: NavController, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {}
 
   ionViewDidEnter() {
@@ -57,10 +65,10 @@ export class ConductorHomePage {
           .isSame(d, "day")
       ) {
         this.orderable.yesterday.push(o);
-      } else if (now.clone().isSame(d, "week")) {
-        this.orderable.week.push(o);
       } else if (now > d) {
         this.orderable.past.push(o);
+      } else if (now.clone().isSame(d, "week")) {
+        this.orderable.week.push(o);
       } else if (now < d) {
         this.orderable.next.push(o);
       }
@@ -70,7 +78,7 @@ export class ConductorHomePage {
   getOrders(refresher = null) {
     this.api
       .get(
-        `pedidos?where[conductor_id]=${
+        `pedidos?with[]=cliente&where[conductor_id]=${
           this.api.user.conductor.id
         }&whereNotNull[]=fecha_entrega&paginate=300&order[updated_at]=&order[estado]=desc`
       )
@@ -91,12 +99,14 @@ export class ConductorHomePage {
   options(order) {
     this.actionsheet
       .create({
-        title: `Acciones ${this.api.trans("literals.order")} ${order.numero_pedido}`,
+        title: `${this.api.trans("literals.order")} ${order.numero_pedido}`,
         buttons: [
           {
             icon: "map",
             text: "Ver",
-            handler: () => {}
+            handler: () => {
+              this.navCtrl.push("OrderPage", { pedido: order });
+            }
           },
           {
             icon: "create",

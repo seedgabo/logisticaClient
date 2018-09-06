@@ -9,7 +9,7 @@
     <ion-buttons end>
       <button icon-only clear ion-button (click)="toNotificaciones()">
         <ion-icon name="notifications"></ion-icon>
-        <ion-badge>{{api.user.notificaciones_count}}</ion-badge>
+        <ion-badge>{{api.user?.notificaciones_count}}</ion-badge>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -23,168 +23,35 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-
-  <ion-list *ngIf="orderable.past?.length > 0">
-    <ion-list-header>
-      Pasadas
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.past; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-  <ion-list *ngIf="orderable.yesterday?.length > 0">
-    <ion-list-header>
-      Ayer
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.yesterday; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-  <ion-list *ngIf="orderable.today?.length > 0">
-    <ion-list-header>
-      Hoy
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.today; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-  <ion-list *ngIf="orderable.tomorrow?.length > 0">
-    <ion-list-header>
-      Mañana
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.tomorrow; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-  <ion-list *ngIf="orderable.week?.length > 0">
-    <ion-list-header>
-      Esta Semana
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.week; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-  <ion-list *ngIf="orderable.next?.length > 0">
-    <ion-list-header>
-      Programadas
-    </ion-list-header>
-    <button ion-item (click)="options(order)" *ngFor="let order of orderable.next; let i = index">
-      <h2>
-        <b>
-          #
-        </b>
-        {{ order.numero_pedido }}
-      </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
-      </h3>
-      <h4>
-        <b>
-          {{api.trans('literals.type')}}:
-        </b>
-        {{ order.tipo }}
-      </h4>
-      <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
-    </button>
-  </ion-list>
-
-
+  <div *ngFor="let list of ['past','yesterday','today','tomorrow','week','next']">
+    <ion-list *ngIf="orderable[list]?.length > 0">
+      <ion-list-header color="light">
+        <ion-icon name="timer" item-left color="primary" small></ion-icon>
+        {{ trans[list] }}
+      </ion-list-header>
+      <button ion-item (click)="options(order)" *ngFor="let order of orderable[list]; let i = index">
+        <h2>
+          <b> # </b>
+          {{ order.numero_pedido }}
+        </h2>
+        <h3>
+          <b> {{api.trans('literals.status')}}: </b>
+          {{ order.estado }}
+        </h3>
+        <h4>
+          <b> {{api.trans('literals.type')}}: </b>
+          {{ order.tipo }}
+        </h4>
+        <h4>
+          <b>{{'literals.client' | trans }}: </b>
+          {{ order.cliente?.nombres }}
+        </h4>
+        <p>{{order.fecha_entrega | amLocale:'es-us' | amCalendar }}</p>
+        <p>
+          <b>Destino:</b>
+          {{order.direccion_destino}}
+        </p>
+      </button>
+    </ion-list>
+  </div>
 </ion-content>

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{pedido.numero_pedido}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-fab top right>
+    <button ion-fab mini color="pink" (click)="openMaps()">
+      <ion-icon name="navigate"></ion-icon>
+    </button>
+  </ion-fab>
+  <div style="height: 250px" id="map"></div>
+  <ion-list>
+    <ion-item>
+      <b>{{ 'literals.client' | trans }}</b>
+      <h2>{{ pedido.cliente?.nombres }}</h2>
+    </ion-item>
+
+    <ion-item>
+      <b>{{ 'Direccion de Envio' | trans }}</b>
+      <h2>{{ pedido.direccion_envio }}</h2>
+    </ion-item>
+
+    <ion-item>
+      <b>{{ 'Fecha Entrega' | trans }}</b>
+      <h2>{{ pedido.fecha_entrega | amCalendar }}</h2>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

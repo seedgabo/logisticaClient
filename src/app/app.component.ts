@@ -22,7 +22,8 @@ import { Facturas } from "../pages/facturas/facturas";
 })
 export class MyApp {
   rootPage: any;
-  @ViewChild(Nav) navCtrl: Nav;
+  @ViewChild(Nav)
+  navCtrl: Nav;
   modulos = {
     tickets: false,
     calendario: false,
@@ -48,8 +49,14 @@ export class MyApp {
         this.rootPage = LoginPage;
         return;
       }
-      if (this.api.user.modulos.clientes && this.api.user.iscliente) this.rootPage = ClientesHome;
-      else this.rootPage = TabsPage;
+      if (this.api.user.cliente) {
+        this.rootPage = ClientesHome;
+      } else if (this.api.user.conductor) {
+        this.rootPage = "ConductorHomePage";
+      } else {
+        this.rootPage = TabsPage;
+      }
+
       this.can();
       this.api
         .doLogin()
@@ -59,6 +66,7 @@ export class MyApp {
         })
         .catch(console.error);
     });
+
     platform.ready().then(() => {
       this.events.subscribe("login", () => {
         this.api.ready.then(() => {

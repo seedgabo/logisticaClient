@@ -1,5 +1,5 @@
 <ion-split-pane [enabled]="false && api.user && api.user?.id">
-  <ion-menu [enabled]="api.user && !api.user?.iscliente" [content]="mycontent">
+  <ion-menu [enabled]="api.user && !api.user?.iscliente && !api.user?.isDriver" [content]="mycontent">
     <ion-content>
       <div>
         <ion-grid class="logo-header">
@@ -95,10 +95,23 @@
         <ion-list-header color="light">
           <ion-icon name="menu" small item-left></ion-icon> Menu
         </ion-list-header>
-
-        <button ion-item menuClose (click)="MisFacturas()">
-          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis Facturas
+        <button ion-item menuClose (click)="toLogin()">
+          <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
         </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <ion-menu [enabled]="api.user && api.user?.isDriver" [content]="mycontent">
+    <ion-content>
+      <div class="logo-header" text-center>
+        <img src="assets/img/logo-completo.png" alt="logo">
+      </div>
+      <ion-list>
+        <ion-list-header color="light">
+          <ion-icon name="menu" small item-left></ion-icon> Menu
+        </ion-list-header>
         <button ion-item menuClose (click)="toLogin()">
           <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
         </button>
