@@ -39,7 +39,7 @@ export class ConductorHomePage {
   getOrders(refresher = null) {
     this.api
       .get(
-        `pedidos?with[]=cliente&where[conductor_id]=${
+        `pedidos?with[]=cliente&with[]=items&where[conductor_id]=${
           this.api.user.conductor.id
         }&whereIn[estado]=solicitud programada,solicitud recogida&paginate=300&order[updated_at]=&order[estado]=desc`
       )
@@ -128,7 +128,7 @@ export class ConductorHomePage {
             }
           },
           {
-            icon: "checkmark",
+            icon: "checkmark-circle",
             text: "Marcar Como en Bodega",
             handler: () => {
               this.api.post(`pedidos/${order.id}`, { estado: "solicitud en bodega" }).then(() => {

@@ -34,11 +34,13 @@
           <b> # </b>
           {{ order.numero_pedido }}
         </h2>
-        <h3>
+        <h3 text-capitalize>
           <b> {{api.trans('literals.status')}}: </b>
-          {{ order.estado }}
+          <ion-badge class="order.estado">
+            {{ order.estado }}
+          </ion-badge>
         </h3>
-        <h4>
+        <h4 text-capitalize>
           <b> {{api.trans('literals.type')}}: </b>
           {{ order.tipo }}
         </h4>

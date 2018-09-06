@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavParams, ModalController, ViewController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import moment from "moment";
+import { ProductSearchPage } from "../product-search/product-search";
 @IonicPage()
 @Component({
   selector: "page-order-editor",
@@ -25,6 +26,7 @@ export class OrderEditorPage {
   signature = false;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
+  addresses = [];
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
@@ -38,33 +40,27 @@ export class OrderEditorPage {
       }
     }
   }
-
+  ionViewDidLoad() {
+    this.api.ready.then((user) => {
+      this.api.get("clientes/" + this.order.cliente_id + "?with[]=addresses").then((data: any) => {
+        this.addresses = data.addresses;
+        if (this.addresses.length > 0) {
+          this.order.direccion_envio = this.addresses[this.addresses.length - 1].address;
+        }
+      });
+    });
+  }
   dismiss() {
     this.viewCtrl.dismiss();
   }
 
   async save() {
     this.loading = true;
-    var count: any = await this.api.get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&count=1`).catch((err) => {
-      this.loading = false;
-    });
-    function pad(n, width, z = "0") {
-      n = n + "";
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    }
-    count = pad(++count, 3);
     var promise;
     var data = {
-      numero_pedido: `01/${this.api.user.cliente.document}/0${this.tipos.indexOf(this.order.tipo) + 1}/${count}`,
       direccion_envio: this.order.direccion_envio,
       tipo: this.order.tipo,
-      fecha_pedido: moment(this.order.fecha_pedido)
-        .local()
-        .format("YYYY-MM-DD HH:mm:ss"),
       estado: this.order.estado,
-      user_id: this.order.user_id ? this.order.user_id : this.api.user.id,
-      entidad_id: this.order.entidad_id,
-      cliente_id: this.order.cliente_id,
       items: this.order.items
     };
     if (this.order.id) {
@@ -75,7 +71,6 @@ export class OrderEditorPage {
     promise
       .then((resp) => {
         this.order = resp;
-        this.editing = false;
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
       })
