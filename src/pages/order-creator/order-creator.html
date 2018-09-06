@@ -39,6 +39,10 @@
     </ion-select>
   </ion-item>
 
+  <div style="margin-top:15px">
+    <image-input [(ngModel)]="image" [clear]="true" color="primary"></image-input>
+  </div>
+
   <!-- Productos -->
   <ion-list no-padding no-margin>
     <ion-list-header>
@@ -79,9 +83,7 @@
     </ion-fab>
   </ion-list>
 
-  <div style="margin-top:15px">
-    <image-input [(ngModel)]="image" [clear]="true" color="primary"></image-input>
-  </div>
+
 
 </ion-content>
 
