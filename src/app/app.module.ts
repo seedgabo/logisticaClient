@@ -47,6 +47,8 @@ import { CodePush } from "@ionic-native/code-push";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { Geolocation } from "@ionic-native/geolocation";
+
 import { Push } from "@ionic-native/push";
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { PipesModule } from "../pipes/pipes.module";
@@ -127,6 +129,6 @@ import { PipesModule } from "../pipes/pipes.module";
     listTicket,
     ProductSearchPage
   ],
-  providers: [Api, CodePush, SplashScreen, StatusBar, InAppBrowser, Push, FileTransfer]
+  providers: [Api, CodePush, SplashScreen, Geolocation, StatusBar, InAppBrowser, Push, FileTransfer]
 })
 export class AppModule {}

@@ -27,6 +27,7 @@
     "@ionic-native/core": "^4.2.1",
     "@ionic-native/file-opener": "^4.7.0",
     "@ionic-native/file-transfer": "^4.2.1",
+    "@ionic-native/geolocation": "^4.12.2",
     "@ionic-native/in-app-browser": "^4.2.1",
     "@ionic-native/push": "^4.2.1",
     "@ionic-native/splash-screen": "^4.2.1",
@@ -48,6 +49,7 @@
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-opener2": "^2.0.19",
     "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -108,6 +110,9 @@
       "cordova-plugin-zip": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
+      },
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
       }
     },
     "platforms": [

@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import L, { polygon } from "leaflet";
 import polyline from "@mapbox/polyline";
+import { Geolocation } from "@ionic-native/geolocation";
+
 @IonicPage()
 @Component({
   selector: "page-order",
@@ -16,7 +18,7 @@ export class OrderPage {
     longitude: -74.072092
   };
   map = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public geolocation: Geolocation) {
     this.pedido = this.navParams.data.pedido;
     this.location = Object.assign(this.location, this.pedido.location);
     if (this.pedido.direccion_destino) {
@@ -25,25 +27,38 @@ export class OrderPage {
   }
 
   async getRoute() {
-    navigator.geolocation.getCurrentPosition(async (loc) => {
-      var coordinates = `${loc.coords.longitude},${loc.coords.latitude};${this.location.longitude},${this.location.latitude}`;
-      var response = await fetch(`http://router.project-osrm.org/route/v1/driving/${coordinates}?alternatives=true&annotations=true`);
-      var data = await response.json();
+    navigator.geolocation.getCurrentPosition(
+      async (loc) => {
+        var coordinates = `${loc.coords.longitude},${loc.coords.latitude};${this.location.longitude},${this.location.latitude}`;
+        var response = await fetch(`http://router.project-osrm.org/route/v1/driving/${coordinates}?alternatives=true&annotations=true`);
+        var data = await response.json();
+        this.addPath(loc, data.routes[0].geometry);
+      },
+      () => {
+        this.geolocation.getCurrentPosition().then(async (loc) => {
+          var coordinates = `${loc.coords.longitude},${loc.coords.latitude};${this.location.longitude},${this.location.latitude}`;
+          var response = await fetch(`http://router.project-osrm.org/route/v1/driving/${coordinates}?alternatives=true&annotations=true`);
+          var data = await response.json();
+          this.addPath(loc, data.routes[0].geometry);
+        });
+      }
+    );
+  }
 
-      var latlngs = polyline.decode(data.routes[0].geometry);
-      var poly = L.polyline(latlngs);
-      poly.addTo(this.map);
-      this.map.fitBounds(poly.getBounds(), { padding: [50, 50] });
+  addPath(loc, geometry) {
+    var latlngs = polyline.decode(geometry);
+    var poly = L.polyline(latlngs);
+    poly.addTo(this.map);
+    this.map.fitBounds(poly.getBounds(), { padding: [50, 50] });
 
-      var icon = L.divIcon({
-        className: "pin-icon-container",
-        iconSize: [50, 50],
-        html: `<div class='pin-icon'>
+    var icon = L.divIcon({
+      className: "pin-icon-container",
+      iconSize: [50, 50],
+      html: `<div class='pin-icon'>
           <i class="fas fa-map-marker" aria-hidden="true"></i>
         </div>`
-      });
-      L.marker([loc.coords.latitude, loc.coords.longitude], { icon: icon }).addTo(this.map);
     });
+    L.marker([loc.coords.latitude, loc.coords.longitude], { icon: icon }).addTo(this.map);
   }
 
   ionViewDidLoad() {

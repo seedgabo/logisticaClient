@@ -74,12 +74,12 @@ export class MyApp {
         });
       });
       this.splashscreen.hide();
-      this.codepush.sync({ updateDialog: false, installMode: InstallMode.IMMEDIATE }, console.log).subscribe(
-        (syncStatus) => console.log(syncStatus),
-        (err) => {
-          console.warn(err);
-        }
-      );
+      // this.codepush.sync({ updateDialog: false, installMode: InstallMode.IMMEDIATE }, console.log).subscribe(
+      //   (syncStatus) => console.log(syncStatus),
+      //   (err) => {
+      //     console.warn(err);
+      //   }
+      // );
     });
   }
   toLogin() {
