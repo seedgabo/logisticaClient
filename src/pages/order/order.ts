@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Api } from "../../providers/api/api";
-import L, { polygon } from "leaflet";
+import L from "leaflet";
 import polyline from "@mapbox/polyline";
 import { Geolocation } from "@ionic-native/geolocation";
 

@@ -6,7 +6,7 @@ import { LoginPage } from "../pages/login/login";
 import { ClientesHome } from "../pages/clientes-home/clientes-home";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
-import { CodePush, InstallMode } from "@ionic-native/code-push";
+import { CodePush } from "@ionic-native/code-push";
 import { HomePage } from "../pages/home/home";
 import { TicketsTodosPage } from "../pages/tickets-todos/tickets-todos";
 import { MisTicketsPage } from "../pages/mis-tickets/mis-tickets";
