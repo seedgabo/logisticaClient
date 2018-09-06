@@ -18,14 +18,18 @@
     </ion-item>
 
     <ion-item>
-      <b>{{ 'Direccion de Envio' | trans }}</b>
+      <b>{{ 'literals.delivery address' | trans }}</b>
       <h2>{{ pedido.direccion_envio }}</h2>
     </ion-item>
 
     <ion-item>
-      <b>{{ 'Fecha Entrega' | trans }}</b>
+      <b>{{ 'literals.delivery date' | trans }}</b>
       <h2>{{ pedido.fecha_entrega | amCalendar }}</h2>
     </ion-item>
+
+    <ion-list-header>
+      {{'literals.products' | trans }}
+    </ion-list-header>
 
   </ion-list>
 </ion-content>
