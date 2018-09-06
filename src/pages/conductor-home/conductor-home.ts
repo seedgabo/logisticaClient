@@ -122,7 +122,7 @@ export class ConductorHomePage {
             icon: "checkmark",
             text: "Marcar Como Recogido",
             handler: () => {
-              this.api.post(`pedidos/${order.id}`, { estado: "solicitud recogida" }).then(() => {
+              this.api.put(`pedidos/${order.id}`, { estado: "solicitud recogida" }).then(() => {
                 this.getOrders();
               });
             }
@@ -131,7 +131,7 @@ export class ConductorHomePage {
             icon: "checkmark-circle",
             text: "Marcar Como en Bodega",
             handler: () => {
-              this.api.post(`pedidos/${order.id}`, { estado: "solicitud en bodega" }).then(() => {
+              this.api.put(`pedidos/${order.id}`, { estado: "solicitud en bodega" }).then(() => {
                 this.getOrders();
               });
             }
