@@ -84,7 +84,11 @@ export class MyApp {
   }
   toLogin() {
     this.api.user = {};
+    this.api.username = "";
+    this.api.password = "";
     this.api.storage.remove("user");
+    this.api.storage.remove("username");
+    this.api.storage.remove("password");
     this.navCtrl.setRoot(LoginPage);
   }
   openBuscador() {
