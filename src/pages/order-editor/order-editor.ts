@@ -2,13 +2,12 @@ import { Component } from "@angular/core";
 import { IonicPage, NavParams, ModalController, ViewController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import moment from "moment";
-import { ProductSearchPage } from "../product-search/product-search";
 @IonicPage()
 @Component({
-  selector: "page-order-creator",
-  templateUrl: "order-creator.html"
+  selector: "page-order-editor",
+  templateUrl: "order-editor.html"
 })
-export class OrderCreatorPage {
+export class OrderEditorPage {
   order: any = {
     fecha_pedido: moment()
       .local()
@@ -23,12 +22,10 @@ export class OrderCreatorPage {
     entidad_id: this.api.user.entidad_id,
     items: []
   };
-  image = null;
+  signature = false;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
-  addresses = [];
-  editing = true;
-  constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
       console.log(this.order);
@@ -40,55 +37,10 @@ export class OrderCreatorPage {
           .toISOString();
       }
     }
-    if (this.navParams.get("editing")) {
-      this.editing = this.navParams.get("editing");
-    }
-  }
-
-  ionViewDidLoad() {
-    this.api.ready.then((user) => {
-      this.api.get("clientes/" + this.api.user.cliente_id + "?with[]=addresses").then((data: any) => {
-        this.addresses = data.addresses;
-        if (this.addresses.length > 0) {
-          this.order.direccion_envio = this.addresses[this.addresses.length - 1].address;
-        }
-      });
-    });
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
-  }
-
-  addAddress() {
-    this.api.alert
-      .create({
-        title: this.api.trans("crud.add") + " " + this.api.trans("literals.address"),
-        inputs: [
-          {
-            type: "text",
-            placeholder: this.api.trans("literals.address"),
-            value: "",
-            name: "address"
-          }
-        ],
-        buttons: [
-          this.api.trans("cancel"),
-          {
-            text: this.api.trans("crud.save"),
-            handler: (data) => {
-              if (data) {
-                this.api.post("addresses", data).then((resp: any) => {
-                  this.api.post(`addresses/add-cliente/${resp.id}/${this.api.user.cliente_id}`, {}).then((data) => {
-                    this.ionViewDidLoad();
-                  });
-                });
-              }
-            }
-          }
-        ]
-      })
-      .present();
   }
 
   async save() {

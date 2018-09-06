@@ -36,6 +36,26 @@ export class ConductorHomePage {
       this.getOrders();
     });
   }
+  getOrders(refresher = null) {
+    this.api
+      .get(
+        `pedidos?with[]=cliente&where[conductor_id]=${
+          this.api.user.conductor.id
+        }&whereIn[estado]=solicitud programada,solicitud recogida&paginate=300&order[updated_at]=&order[estado]=desc`
+      )
+      .then((data: any) => {
+        this._orders = data.data;
+        this.filter();
+        if (refresher) {
+          refresher.complete();
+        }
+      })
+      .catch((err) => {
+        if (refresher) {
+          refresher.complete();
+        }
+      });
+  }
 
   sort() {
     this.orderable = {
@@ -75,27 +95,6 @@ export class ConductorHomePage {
     });
   }
 
-  getOrders(refresher = null) {
-    this.api
-      .get(
-        `pedidos?with[]=cliente&where[conductor_id]=${
-          this.api.user.conductor.id
-        }&whereNotNull[]=fecha_entrega&paginate=300&order[updated_at]=&order[estado]=desc`
-      )
-      .then((data: any) => {
-        this._orders = data.data;
-        this.filter();
-        if (refresher) {
-          refresher.complete();
-        }
-      })
-      .catch((err) => {
-        if (refresher) {
-          refresher.complete();
-        }
-      });
-  }
-
   options(order) {
     this.actionsheet
       .create({
@@ -105,23 +104,37 @@ export class ConductorHomePage {
             icon: "map",
             text: "Ver",
             handler: () => {
-              this.navCtrl.push("OrderPage", { pedido: order });
+              this.navCtrl.push("OrderPage", { order: order });
             }
           },
           {
             icon: "create",
             text: "Editar",
-            handler: () => {}
-          },
-          {
-            icon: "car",
-            text: "Marcar Como En Camino",
-            handler: () => {}
+            handler: () => {
+              let modal = this.modal.create("OrderEditorPage", { order: order });
+              modal.present();
+              modal.onWillDismiss(() => {
+                this.getOrders();
+              });
+            }
           },
           {
             icon: "checkmark",
-            text: "Marcar Como Entregado",
-            handler: () => {}
+            text: "Marcar Como Recogido",
+            handler: () => {
+              this.api.post(`pedidos/${order.id}`, { estado: "solicitud recogida" }).then(() => {
+                this.getOrders();
+              });
+            }
+          },
+          {
+            icon: "checkmark",
+            text: "Marcar Como en Bodega",
+            handler: () => {
+              this.api.post(`pedidos/${order.id}`, { estado: "solicitud en bodega" }).then(() => {
+                this.getOrders();
+              });
+            }
           },
           {
             icon: "clock",

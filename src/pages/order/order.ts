@@ -19,7 +19,7 @@ export class OrderPage {
   };
   map = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public geolocation: Geolocation) {
-    this.pedido = this.navParams.data.pedido;
+    this.pedido = this.navParams.data.order;
     this.location = Object.assign(this.location, this.pedido.location);
     if (this.pedido.direccion_destino) {
       this.location.address = this.pedido.direccion_destino;

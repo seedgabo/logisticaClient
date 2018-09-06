@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-title>
+      <span *ngIf="!order.numero_pedido">
+        {{'crud.edit' | trans}} {{'literals.order' | trans}}
+      </span>
+      <span *ngIf="order.numero_pedido">
+        {{'literals.order' | trans }} # {{order.numero_pedido}}
+      </span>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-item>
+    <ion-label floating> {{'literals.address' | trans}}</ion-label>
+    <ion-select [disabled]="true" [(ngModel)]="order.direccion_envio">
+      <ion-option [value]="address.address" *ngFor="let address of addresses">
+        {{ address.address }}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating> {{'literals.type' | trans}}</ion-label>
+    <ion-select [(ngModel)]="order.tipo">
+      <ion-option [value]="tipo" *ngFor="let tipo of tipos"> {{ tipo }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Productos -->
+  <ion-list no-padding no-margin>
+    <ion-list-header>
+      {{ 'literals.products' | trans }}
+    </ion-list-header>
+    <ion-grid *ngFor="let item of order.items; let i = index">
+      <ion-row justify-content-center align-items-center>
+        <ion-col align-self-center>
+          <ion-item>
+            <ion-label floating>{{'literals.name' | trans}}</ion-label>
+            <ion-input [(ngModel)]="item.name" [placeholder]=" 'literals.name' | trans"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col align-self-center>
+          <ion-item>
+            <ion-label floating>
+              {{'literals.quantity' | trans}}
+              <span *ngIf="item.unit">
+                ({{ item.unit.short }})
+              </span>
+
+            </ion-label>
+            <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" step="any" min="1"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col align-self-center col-1>
+          <button ion-button color="danger" clear icon-only (click)="removeItem(i)">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-fab right>
+      <button (click)="addItem()" ion-fab mini>
+        <ion-icon name="add" item-left></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-list>
+
+  <div>
+    <br><br>
+    <signature [(ngModel)]="signature" color="primary"></signature>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="secondary" [disabled]="!canSave() || loading" (click)="save()">
+      Guardar
+    </button>
+  </ion-toolbar>
+</ion-footer>
