@@ -128,15 +128,6 @@ export class ConductorHomePage {
             }
           },
           {
-            icon: "checkmark-circle",
-            text: "Marcar Como en Bodega",
-            handler: () => {
-              this.api.put(`pedidos/${order.id}`, { estado: "solicitud en bodega" }).then(() => {
-                this.getOrders();
-              });
-            }
-          },
-          {
             icon: "clock",
             text: "Marcar Como Retrasado",
             handler: () => {},
