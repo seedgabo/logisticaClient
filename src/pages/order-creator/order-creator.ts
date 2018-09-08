@@ -25,7 +25,7 @@ export class OrderCreatorPage {
   };
   image = null;
   loading = false;
-  tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
+  tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   addresses = [];
   editing = true;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public api: Api, public modal: ModalController) {
@@ -100,7 +100,7 @@ export class OrderCreatorPage {
       n = n + "";
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
-    count = pad(++count, 3);
+    count = pad(++count, 4);
     var promise;
     var data = {
       numero_pedido: `01/${this.api.user.cliente.document}/0${this.tipos.indexOf(this.order.tipo) + 1}/${count}`,

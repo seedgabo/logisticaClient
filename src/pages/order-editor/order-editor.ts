@@ -25,7 +25,7 @@ export class OrderEditorPage {
   };
   signature = false;
   loading = false;
-  tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Orgánicos"];
+  tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   addresses = [];
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
     if (this.navParams.get("order")) {
