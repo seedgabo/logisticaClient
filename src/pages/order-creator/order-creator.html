@@ -42,6 +42,12 @@
   <div style="margin-top:15px">
     <image-input [(ngModel)]="image" [clear]="true" color="primary"></image-input>
   </div>
+  <div *ngIf="image" style="margin-top:15px">
+    <image-input [label]="('literals.image' | trans ) + '2'" [(ngModel)]="image2" [clear]="true" color="primary"></image-input>
+  </div>
+  <div *ngIf="image2" style="margin-top:15px">
+    <image-input [label]="('literals.image' | trans ) + '3'" [(ngModel)]="image3" [clear]="true" color="primary"></image-input>
+  </div>
 
   <!-- Productos -->
   <ion-list no-padding no-margin>

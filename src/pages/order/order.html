@@ -31,5 +31,23 @@
       {{'literals.products' | trans }}
     </ion-list-header>
 
+    <ion-item *ngFor="let item of pedido.items">
+      <ion-avatar item-left>
+        <img [src]="item.image.url" *ngIf="item.image">
+      </ion-avatar>
+      <h2>{{ item.name }}
+        <small *ngIf="item.referencia">({{item.referencia}})</small>
+      </h2>
+      <h3 item-right>{{ item.cantidad_pedidos}} </h3>
+    </ion-item>
+
+    <ion-list-header *ngIf="pedido.archivos.length > 0">
+      {{'literals.files' | trans }}
+    </ion-list-header>
+    <button ion-item *ngFor="let archivo of pedido.archivos" (click)="downloadFile(archivo)">
+      {{archivo.nombre}}
+      <ion-icon item-right name="download" color="primary" small></ion-icon>
+    </button>
+
   </ion-list>
 </ion-content>

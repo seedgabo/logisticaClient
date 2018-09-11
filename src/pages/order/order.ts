@@ -19,7 +19,8 @@ export class OrderPage {
   };
   map = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public geolocation: Geolocation) {
-    this.pedido = this.navParams.data.order;
+    this.pedido = this.navParams.get("order");
+    console.log(this.pedido);
     this.location = Object.assign(this.location, this.pedido.location);
     if (this.pedido.direccion_destino) {
       this.location.address = this.pedido.direccion_destino;
@@ -78,6 +79,10 @@ export class OrderPage {
       maxZoom: 18
     }).addTo(this.map);
     L.marker([this.location.latitude, this.location.longitude]).addTo(this.map);
+  }
+
+  downloadFile(archivo) {
+    window.open(archivo.url, "_system");
   }
 
   openMaps() {

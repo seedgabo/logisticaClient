@@ -69,8 +69,11 @@ export class OrderEditorPage {
       promise = this.api.post(`pedidos`, data);
     }
     promise
-      .then((resp) => {
+      .then(async (resp) => {
         this.order = resp;
+        if (this.signature) {
+          await this.uploadFile(this.signature, resp, "Firma Conductor.jpg");
+        }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
       })
@@ -110,5 +113,27 @@ export class OrderEditorPage {
 
   canSave() {
     return this.order.direccion_envio && this.order.tipo && this.order.items && this.order.items.length > 0 && this.order.cliente_id;
+  }
+
+  uploadFile(image, item, name = null) {
+    if (!name) name = image.name;
+    return new Promise((resolve, reject) => {
+      var formData, xhr;
+      formData = new FormData();
+      xhr = new XMLHttpRequest();
+      xhr.open("POST", this.api.url + "api/archivo/upload/pedido/" + item.id, true);
+      formData.append("file", image, name);
+      xhr.onload = () => {
+        if (xhr.status == 200) {
+          return resolve(JSON.parse(xhr.responseText));
+        } else {
+          console.error(xhr);
+          return reject(xhr);
+        }
+      };
+      xhr.setRequestHeader("Auth-Token", this.api.user.token);
+
+      xhr.send(formData);
+    });
   }
 }

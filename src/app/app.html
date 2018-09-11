@@ -1,4 +1,5 @@
 <ion-split-pane [enabled]="false && api.user && api.user?.id">
+
   <ion-menu [enabled]="api.user && !api.user?.iscliente && !api.user?.isDriver" [content]="mycontent">
     <ion-content>
       <div>

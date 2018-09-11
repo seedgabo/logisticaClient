@@ -18,7 +18,9 @@ export class ClientesHome {
 
   getOrders(refresher = null) {
     this.api
-      .get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&paginate=150&order[updated_at]=&order[estado]=desc`)
+      .get(
+        `pedidos?where[cliente_id]=${this.api.user.cliente_id}&paginate=150&order[updated_at]=&order[estado]=desc&include=items,archivos`
+      )
       .then((data: any) => {
         this._orders = data.data;
         this.filter();
@@ -46,7 +48,7 @@ export class ClientesHome {
   }
 
   gotoOrder(order) {
-    this.navCtrl.push("OrderPage", { pedido: order });
+    this.navCtrl.push("OrderPage", { order: order });
   }
 
   createOrder() {

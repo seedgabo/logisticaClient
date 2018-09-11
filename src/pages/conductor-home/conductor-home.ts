@@ -39,7 +39,7 @@ export class ConductorHomePage {
   getOrders(refresher = null) {
     this.api
       .get(
-        `pedidos?with[]=cliente&with[]=items&where[conductor_id]=${
+        `pedidos?include=cliente,items,archivos&where[conductor_id]=${
           this.api.user.conductor.id
         }&whereIn[estado]=solicitud programada,solicitud recogida&paginate=300&order[updated_at]=&order[estado]=desc`
       )
@@ -160,7 +160,7 @@ export class ConductorHomePage {
   }
 
   gotoOrder(order) {
-    let modal = this.modal.create("OrderCreatorPage", { pedido: order });
+    let modal = this.modal.create("OrderCreatorPage", { order: order });
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {

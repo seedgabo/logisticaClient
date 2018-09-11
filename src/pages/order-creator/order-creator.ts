@@ -24,6 +24,8 @@ export class OrderCreatorPage {
     items: []
   };
   image = null;
+  image2 = null;
+  image3 = null;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   addresses = [];
@@ -121,9 +123,18 @@ export class OrderCreatorPage {
       promise = this.api.post(`pedidos`, data);
     }
     promise
-      .then((resp) => {
+      .then(async (resp) => {
         this.order = resp;
         this.editing = false;
+        if (this.image) {
+          await this.uploadFile(this.image, resp, "Imagen # 1.jpg");
+        }
+        if (this.image2) {
+          await this.uploadFile(this.image2, resp, "Imagen # 2.jpg");
+        }
+        if (this.image3) {
+          await this.uploadFile(this.image3, resp, "Imagen # 3.jpg");
+        }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
       })
@@ -163,5 +174,27 @@ export class OrderCreatorPage {
 
   canSave() {
     return this.order.direccion_envio && this.order.tipo && this.order.items && this.order.items.length > 0 && this.order.cliente_id;
+  }
+
+  uploadFile(image, item, name = null) {
+    if (!name) name = image.name;
+    return new Promise((resolve, reject) => {
+      var formData, xhr;
+      formData = new FormData();
+      xhr = new XMLHttpRequest();
+      xhr.open("POST", this.api.url + "api/archivo/upload/pedido/" + item.id, true);
+      formData.append("file", image, name);
+      xhr.onload = () => {
+        if (xhr.status == 200) {
+          return resolve(JSON.parse(xhr.responseText));
+        } else {
+          console.error(xhr);
+          return reject(xhr);
+        }
+      };
+      xhr.setRequestHeader("Auth-Token", this.api.user.token);
+
+      xhr.send(formData);
+    });
   }
 }
