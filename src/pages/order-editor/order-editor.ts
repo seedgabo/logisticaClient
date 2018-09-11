@@ -72,7 +72,7 @@ export class OrderEditorPage {
       .then(async (resp) => {
         this.order = resp;
         if (this.signature) {
-          await this.uploadFile(this.signature, resp, "Firma Conductor.jpg");
+          await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Conductor.jpg");
         }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
@@ -136,4 +136,31 @@ export class OrderEditorPage {
       xhr.send(formData);
     });
   }
+  
+  dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    //Old Code
+    //write the ArrayBuffer to a blob, and you're done
+    //var bb = new BlobBuilder();
+    //bb.append(ab);
+    //return bb.getBlob(mimeString);
+
+    //New Code
+    return new Blob([ab], {type: mimeString});
+
+
+}
 }
