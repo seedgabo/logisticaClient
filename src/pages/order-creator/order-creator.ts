@@ -79,7 +79,7 @@ export class OrderCreatorPage {
           {
             text: this.api.trans("crud.save"),
             handler: (data) => {
-              if (data) {
+              if (data && data.address.length > 0) {
                 this.api.post("addresses", data).then((resp: any) => {
                   this.api.post(`addresses/add-cliente/${resp.id}/${this.api.user.cliente_id}`, {}).then((data) => {
                     this.ionViewDidLoad();
