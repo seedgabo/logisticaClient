@@ -25,16 +25,14 @@
   <ion-list>
     <button ion-item (click)="gotoOrder(order)" *ngFor="let order of orders; let i = index">
       <h2>
-        <b>
-          Numero:
-        </b>
+        <b> # </b>
         {{ order.numero_pedido }}
       </h2>
-      <h3>
-        <b>
-          {{api.trans('literals.status')}}:
-        </b>
-        {{ order.estado }}
+      <h3 text-capitalize>
+        <b> {{api.trans('literals.status')}}: </b>
+        <ion-badge class="order.estado">
+          {{ order.estado }}
+        </ion-badge>
       </h3>
       <h4>
         <b>
@@ -43,7 +41,10 @@
         {{ order.tipo }}
       </h4>
       <p>{{order.created_at | amLocale:'es-us' | amCalendar }}</p>
-      <!-- <h3>{{ order.order_compra }}</h3> -->
+      <p>
+        <b>{{api.trans('literals.delivery address')}}:</b>
+        {{order.direccion_destino}}
+      </p>
     </button>
   </ion-list>
 

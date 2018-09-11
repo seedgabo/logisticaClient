@@ -88,8 +88,19 @@
 
   <ion-menu [enabled]="api.user && api.user?.iscliente" [content]="mycontent">
     <ion-content>
-      <div class="logo-header" text-center>
-        <img src="assets/img/logo-completo.png" alt="logo">
+      <div>
+        <ion-grid class="logo-header">
+          <ion-row>
+            <ion-col col-4>
+              <ion-avatar>
+                <img *ngIf="api.user?.imagen" [src]="api.user?.imagen" class="img-circle" style="height:50px">
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-auto>
+              <h4>{{api.user?.nombre}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
       <ion-list>
         <ion-list-header color="light">
@@ -105,8 +116,19 @@
 
   <ion-menu [enabled]="api.user && api.user?.isDriver" [content]="mycontent">
     <ion-content>
-      <div class="logo-header" text-center>
-        <img src="assets/img/logo-completo.png" alt="logo">
+      <div>
+        <ion-grid class="logo-header">
+          <ion-row>
+            <ion-col col-4>
+              <ion-avatar>
+                <img *ngIf="api.user?.imagen" [src]="api.user?.imagen" class="img-circle" style="height:50px">
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-auto>
+              <h4>{{api.user?.nombre}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
       <ion-list>
         <ion-list-header color="light">
