@@ -36,7 +36,7 @@
         </h2>
         <h3 text-capitalize>
           <b> {{api.trans('literals.status')}}: </b>
-          <ion-badge class="order.estado">
+          <ion-badge [class]="order.estado">
             {{ order.estado }}
           </ion-badge>
         </h3>
