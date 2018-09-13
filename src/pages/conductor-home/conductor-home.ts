@@ -127,12 +127,12 @@ export class ConductorHomePage {
               });
             }
           },
-          {
-            icon: "clock",
-            text: "Marcar Como Retrasado",
-            handler: () => {},
-            role: "destructive"
-          },
+          // {
+          //   icon: "clock",
+          //   text: "Marcar Como Retrasado",
+          //   handler: () => {},
+          //   role: "destructive"
+          // },
           {
             icon: "close",
             text: this.api.trans("crud.cancel"),
