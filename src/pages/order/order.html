@@ -35,10 +35,12 @@
       <ion-avatar item-left>
         <img [src]="item.image.url" *ngIf="item.image">
       </ion-avatar>
-      <h2>{{ item.name }}
-        <small *ngIf="item.referencia">({{item.referencia}})</small>
-      </h2>
-      <h3 item-right>{{ item.cantidad_pedidos}} </h3>
+      <h2>{{ item.name }} </h2>
+      <h3 item-right>
+        {{ item.cantidad_pedidos}}
+        <span *ngIf="item.unit; else und"> {{ item.unit.short }} </span>
+        <ng-template #und> Und </ng-template>
+      </h3>
     </ion-item>
 
     <ion-list-header *ngIf="pedido.archivos.length > 0">

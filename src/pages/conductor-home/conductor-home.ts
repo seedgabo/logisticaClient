@@ -39,7 +39,7 @@ export class ConductorHomePage {
   getOrders(refresher = null) {
     this.api
       .get(
-        `pedidos?include=cliente,items,archivos&where[conductor_id]=${
+        `pedidos?include=cliente,items.unit,archivos&where[conductor_id]=${
           this.api.user.conductor.id
         }&whereIn[estado]=solicitud programada,solicitud recogida&paginate=300&order[updated_at]=&order[estado]=desc`
       )
