@@ -96,50 +96,56 @@ export class ConductorHomePage {
   }
 
   options(order) {
+    var buttons = [
+      {
+        icon: "map",
+        text: "Ver",
+        handler: () => {
+          this.navCtrl.push("OrderPage", { order: order });
+        }
+      },
+      {
+        icon: "create",
+        text: "Editar",
+        handler: () => {
+          let modal = this.modal.create("OrderEditorPage", { order: order });
+          modal.present();
+          modal.onWillDismiss(() => {
+            this.getOrders();
+          });
+        }
+      },
+      {
+        icon: "checkmark",
+        text: "Marcar Como Recogido",
+        handler: () => {
+          this.api.put(`pedidos/${order.id}`, { estado: "solicitud recogida" }).then(() => {
+            this.getOrders();
+          });
+        }
+      },
+      // {
+      //   icon: "clock",
+      //   text: "Marcar Como Retrasado",
+      //   handler: () => {},
+      //   role: "destructive"
+      // },
+      {
+        icon: "close",
+        text: this.api.trans("crud.cancel"),
+        handler: () => {},
+        role: "cancel"
+      }
+    ];
+    if (order.estado == "solicitud recogida") {
+      buttons.splice(1, 2);
+      this.navCtrl.push("OrderPage", { order: order });
+      return;
+    }
     this.actionsheet
       .create({
         title: `${this.api.trans("literals.order")} ${order.numero_pedido}`,
-        buttons: [
-          {
-            icon: "map",
-            text: "Ver",
-            handler: () => {
-              this.navCtrl.push("OrderPage", { order: order });
-            }
-          },
-          {
-            icon: "create",
-            text: "Editar",
-            handler: () => {
-              let modal = this.modal.create("OrderEditorPage", { order: order });
-              modal.present();
-              modal.onWillDismiss(() => {
-                this.getOrders();
-              });
-            }
-          },
-          {
-            icon: "checkmark",
-            text: "Marcar Como Recogido",
-            handler: () => {
-              this.api.put(`pedidos/${order.id}`, { estado: "solicitud recogida" }).then(() => {
-                this.getOrders();
-              });
-            }
-          },
-          // {
-          //   icon: "clock",
-          //   text: "Marcar Como Retrasado",
-          //   handler: () => {},
-          //   role: "destructive"
-          // },
-          {
-            icon: "close",
-            text: this.api.trans("crud.cancel"),
-            handler: () => {},
-            role: "cancel"
-          }
-        ]
+        buttons: buttons
       })
       .present();
   }
