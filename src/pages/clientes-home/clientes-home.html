@@ -40,7 +40,16 @@
         </b>
         {{ order.tipo }}
       </h4>
-      <p>{{order.created_at | amLocale:'es-us' | amCalendar }}</p>
+      <span text-wrap *ngIf="order.fecha_entrega">
+        <b>{{api.trans('literals.shipping date')}}:</b>
+        {{order.fecha_entrega | amLocale:'es-us' | amCalendar }}
+        <br>
+      </span>
+      <span text-wrap *ngIf="!order.fecha_entrega">
+        <b>{{api.trans('literals.shipping date')}}:</b>
+        {{order.fecha_pedido | amLocale:'es-us' | amCalendar }}
+        <br>
+      </span>
     </button>
   </ion-list>
 
