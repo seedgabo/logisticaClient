@@ -1,6 +1,7 @@
 <ion-split-pane [enabled]="false && api.user && api.user?.id">
 
-  <ion-menu [enabled]="api.user && !api.user?.iscliente && !api.user?.isDriver" [content]="mycontent">
+  <ion-menu [enabled]="api.user && !api.user?.iscliente && !api.user?.isDriver && !api.user?.is_bodeguero"
+            [content]="mycontent">
     <ion-content>
       <div>
         <ion-grid class="logo-header">
@@ -19,13 +20,16 @@
       <ion-list>
 
         <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="Tickets()">
-          <ion-icon name="pricetag" item-right color="primary"></ion-icon> {{ api.trans('literals.tickets') }}
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> {{
+          api.trans('literals.tickets') }}
         </button>
         <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="MisTickets()">
-          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis {{ api.trans('literals.tickets') }}
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Mis {{
+          api.trans('literals.tickets') }}
         </button>
         <button ion-item menuClose detail-none no *ngIf="modulos.tickets" (click)="TicketTodos()">
-          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Todos Los {{ api.trans('literals.tickets')
+          <ion-icon name="pricetag" item-right color="primary"></ion-icon> Todos Los {{
+          api.trans('literals.tickets')
           }}
         </button>
 
@@ -35,39 +39,48 @@
         </ion-item-divider>
 
         <button ion-item menuClose detail-none no *ngIf="modulos.calendario" (click)="Calendar()">
-          <ion-icon name="calendar" item-right color="primary"></ion-icon> {{api.trans('literals.calendar')}}
+          <ion-icon name="calendar" item-right color="primary"></ion-icon>
+          {{api.trans('literals.calendar')}}
         </button>
 
         <button ion-item menuClose detail-none no *ngIf="modulos.documentos" (click)="Documentos()">
-          <ion-icon name="folder-open" item-right color="primary"></ion-icon> {{api.trans('literals.documents')}}
+          <ion-icon name="folder-open" item-right color="primary"></ion-icon>
+          {{api.trans('literals.documents')}}
         </button>
 
         <button ion-item menuClose detail-none no (click)="Clinica()" *ngIf="modulos.historias_clinicas">
-          <ion-icon name="medkit" item-right color="primary"></ion-icon> {{api.trans('literals.Historias Clinicas')}}
+          <ion-icon name="medkit" item-right color="primary"></ion-icon>
+          {{api.trans('literals.Historias Clinicas')}}
         </button>
 
         <button ion-item menuClose detail-none no (click)="gotoClientes()" *ngIf="modulos.facturas">
-          <ion-icon name="contacts" item-right color="primary"></ion-icon> {{api.trans('literals.clients')}}
+          <ion-icon name="contacts" item-right color="primary"></ion-icon>
+          {{api.trans('literals.clients')}}
         </button>
 
         <button ion-item menuClose detail-none no *ngIf="modulos.pedidos" (click)="Pedidos()">
-          <ion-icon name="cart" item-right color="primary"></ion-icon> {{ api.trans('literals.orders') }}
+          <ion-icon name="cart" item-right color="primary"></ion-icon> {{
+          api.trans('literals.orders') }}
         </button>
 
         <button ion-item menuClose detail-none no (click)="Invoices()" *ngIf="modulos.clientes">
-          <ion-icon name="document" item-right color="primary"></ion-icon> {{ api.trans('literals.invoices') }}
+          <ion-icon name="document" item-right color="primary"></ion-icon> {{
+          api.trans('literals.invoices') }}
         </button>
 
         <button ion-item menuClose detail-none no (click)="Suppliers()" *ngIf="modulos.proveedores">
-          <ion-icon name="contacts" item-right color="primary"></ion-icon> {{ api.trans('literals.suppliers') }}
+          <ion-icon name="contacts" item-right color="primary"></ion-icon> {{
+          api.trans('literals.suppliers') }}
         </button>
 
         <button ion-item menuClose detail-none no (click)="Bodegas()" *ngIf="modulos.inventarios">
-          <ion-icon name="logo-dropbox" item-right color="primary"></ion-icon> {{ api.trans('literals.storages') }}
+          <ion-icon name="logo-dropbox" item-right color="primary"></ion-icon> {{
+          api.trans('literals.storages') }}
         </button>
 
         <button ion-item menuClose detail-none no (click)="Annotations()" *ngIf="modulos.anotaciones">
-          <ion-icon name="ios-list-box" item-right color="primary"></ion-icon> {{ api.trans('literals.annotations') }}
+          <ion-icon name="ios-list-box" item-right color="primary"></ion-icon> {{
+          api.trans('literals.annotations') }}
         </button>
 
         <ion-item-divider color="light">
@@ -87,7 +100,7 @@
     </ion-footer>
   </ion-menu>
 
-  <ion-menu [enabled]="api.user && api.user?.iscliente" [content]="mycontent">
+  <ion-menu [enabled]="api.user && api.user?.iscliente && !api.user?.is_bodeguero" [content]="mycontent">
     <ion-content>
       <div>
         <ion-grid class="logo-header">
@@ -115,7 +128,7 @@
   </ion-menu>
 
 
-  <ion-menu [enabled]="api.user && api.user?.isDriver" [content]="mycontent">
+  <ion-menu [enabled]="api.user && api.user?.isDriver && !api.user?.is_bodeguero" [content]="mycontent">
     <ion-content>
       <div>
         <ion-grid class="logo-header">
@@ -135,6 +148,42 @@
         <ion-list-header color="light">
           <ion-icon name="menu" small item-left></ion-icon> Menu
         </ion-list-header>
+        <button ion-item menuClose (click)="toLogin()">
+          <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <ion-menu [enabled]="api.user && api.user?.is_bodeguero" [content]="mycontent">
+    <ion-content>
+      <div>
+        <ion-grid class="logo-header">
+          <ion-row>
+            <ion-col col-4>
+              <ion-avatar>
+                <img *ngIf="api.user?.imagen" [src]="api.user?.imagen" class="img-circle" style="height:50px">
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-auto>
+              <h4>{{api.user?.nombre}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-list>
+        <ion-list-header color="light">
+          <ion-icon name="menu" small item-left></ion-icon> Menu
+        </ion-list-header>
+        <button ion-item menuClose (click)="toBodegasHome()">
+          <ion-icon name="home" item-right color="primary"></ion-icon> Home
+        </button>
+        <button ion-item menuClose (click)="Bodegas()">
+          <ion-icon name="logo-dropbox" item-right color="primary"></ion-icon> {{
+          api.trans('literals.storages') }}
+        </button>
+
         <button ion-item menuClose (click)="toLogin()">
           <ion-icon name="log-out" item-right color="primary"></ion-icon> Cerrar Sesión
         </button>

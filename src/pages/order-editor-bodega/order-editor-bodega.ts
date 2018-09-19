@@ -1,21 +1,21 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavParams, ModalController, ViewController } from "ionic-angular";
-import { Api } from "../../providers/api/api";
+import { IonicPage, NavParams, ViewController, ModalController } from "ionic-angular";
 import moment from "moment";
+import { Api } from "../../providers/api/api";
 import { ProductSearchPage } from "../product-search/product-search";
 @IonicPage()
 @Component({
-  selector: "page-order-editor",
-  templateUrl: "order-editor.html"
+  selector: "page-order-editor-bodega",
+  templateUrl: "order-editor-bodega.html"
 })
-export class OrderEditorPage {
+export class OrderEditorBodegaPage {
   order: any = {
     fecha_pedido: moment()
       .local()
       .toDate()
       .toISOString(),
     tipo: "Residuos Aprovechables",
-    estado: "solicitud generada",
+    estado: "solicitud en bodega",
     fecha_entrega: null,
     direccion_envio: null,
     user_id: this.api.user.id,
@@ -26,7 +26,7 @@ export class OrderEditorPage {
   signature = false;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
-  addresses = [];
+  bodega = null;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
@@ -45,16 +45,8 @@ export class OrderEditorPage {
           .toISOString();
       }
     }
-  }
-  ionViewDidLoad() {
-    this.api.ready.then((user) => {
-      this.api.get("clientes/" + this.order.cliente_id + "?with[]=addresses").then((data: any) => {
-        this.addresses = data.addresses;
-        if (this.addresses.length > 0) {
-          this.order.direccion_envio = this.addresses[this.addresses.length - 1].address;
-        }
-      });
-    });
+    this.api.load("clientes");
+    this.api.load("bodegas");
   }
 
   dismiss() {
@@ -65,9 +57,10 @@ export class OrderEditorPage {
     this.loading = true;
     var promise;
     var data = {
-      direccion_envio: this.order.direccion_envio,
+      fecha_entrega: new Date().toISOString(),
+      direccion_envio: this.bodega && this.bodega.location ? this.bodega.location.address : "" + this.bodega.direccion_envio,
       tipo: this.order.tipo,
-      estado: this.order.estado,
+      estado: "solicitud en bodega",
       items: this.order.items
     };
     if (this.order.id) {
@@ -79,7 +72,7 @@ export class OrderEditorPage {
       .then(async (resp) => {
         this.order = resp;
         if (this.signature) {
-          await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Conductor.jpg");
+          await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Bodeguero.jpg");
         }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
@@ -119,7 +112,7 @@ export class OrderEditorPage {
   }
 
   canSave() {
-    return this.order.direccion_envio && this.order.tipo && this.order.items && this.order.items.length > 0 && this.order.cliente_id;
+    return this.order.tipo && this.order.items && this.order.items.length > 0;
   }
 
   uploadFile(image, item, name = null) {

@@ -44,7 +44,9 @@ export class LoginPage {
             })
             .catch(console.error);
           loader.dismiss().then(() => {
-            if (data.cliente) {
+            if (data.is_bodeguero) {
+              this.navController.setRoot("BodegueroHomePage");
+            } else if (data.cliente) {
               this.navController.setRoot(ClientesHome);
             } else if (data.conductor) {
               this.navController.setRoot("ConductorHomePage");

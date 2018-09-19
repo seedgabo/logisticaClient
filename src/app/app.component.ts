@@ -49,7 +49,9 @@ export class MyApp {
         this.rootPage = LoginPage;
         return;
       }
-      if (this.api.user.cliente) {
+      if (this.api.user.is_bodeguero) {
+        this.rootPage = "BodegueroHomePage";
+      } else if (this.api.user.cliente) {
         this.rootPage = ClientesHome;
       } else if (this.api.user.conductor) {
         this.rootPage = "ConductorHomePage";
@@ -140,7 +142,10 @@ export class MyApp {
     this.navCtrl.push("AnnotationsPage");
   }
   Bodegas() {
-    this.navCtrl.push("StoragePage");
+    this.navCtrl.setRoot("StoragePage");
+  }
+  toBodegasHome() {
+    this.navCtrl.setRoot("BodegueroHomePage");
   }
 
   can() {

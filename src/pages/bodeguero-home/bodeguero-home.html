@@ -1,18 +1,69 @@
-<!--
-  Generated template for the BodegueroHomePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>BodegueroHome</ion-title>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ api.trans('literals.orders') }} | Interfaz Bodega </ion-title>
+    <ion-buttons end>
+      <button icon-only clear ion-button (click)="toNotificaciones()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge>{{api.user.notificaciones_count}}</ion-badge>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="filter()" [debounce]="750" [placeholder]="'Buscar Ordenes...'"
+                   [animated]="true"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-refresher (ionRefresh)="getOrders($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <button ion-item (click)="gotoOrder(order)" *ngFor="let order of orders; let i = index">
+      <h2>
+        <b> # </b>
+        {{ order.numero_pedido }}
+      </h2>
+      <h3 text-capitalize>
+        <b> {{api.trans('literals.status')}}: </b>
+        <ion-badge [class]="order.estado">
+          {{ order.estado }}
+        </ion-badge>
+      </h3>
+      <h4>
+        <b>
+          {{api.trans('literals.type')}}:
+        </b>
+        {{ order.tipo }}
+      </h4>
+      <span *ngIf="order.driver">
+        <b>
+          {{ api.trans('literals.driver') }}:
+        </b>
+        {{order.driver.full_name}}
+      </span>
+      <h5 text-wrap *ngIf="order.fecha_entrega">
+        <b>{{api.trans('literals.shipping date')}}:</b>
+        {{order.fecha_entrega | amLocale:'es-us' | amCalendar }}
+        <br>
+      </h5>
+      <h5 text-wrap *ngIf="!order.fecha_entrega">
+        <b>{{api.trans('literals.shipping date')}}:</b>
+        {{order.fecha_pedido | amLocale:'es-us' | amCalendar }}
+        <br>
+      </h5>
+    </button>
+  </ion-list>
 
+  <ion-fab bottom right>
+    <button ion-fab (click)="createOrder()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
