@@ -46,7 +46,7 @@ export class OrderEditorBodegaPage {
       }
     }
     this.api.load("clientes");
-    this.api.load("bodegas");
+    this.api.load("bodegas?scope[byuser]=1");
   }
 
   dismiss() {
