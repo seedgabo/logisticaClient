@@ -22,7 +22,7 @@ export class StoragePage {
     var promise;
     var isSuperAdmin = this.api.isSuperAdmin();
     if (isSuperAdmin) {
-      promise = this.api.get("bodegas?with[]=items.inventarios");
+      promise = this.api.get("bodegas?scope[byuser]=1&with[]=items.inventarios");
     } else {
       promise = this.api.get(`user/${this.api.user.id}?with[]=bodegas.items.inventarios`);
     }
