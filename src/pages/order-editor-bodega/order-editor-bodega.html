@@ -26,7 +26,7 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="!order.id && api.objects.bodegas">
+  <ion-item *ngIf="api.objects.bodegas">
     <ion-label floating>{{ 'literals.warehouse' | trans }}</ion-label>
     <ion-select [(ngModel)]="bodega">
       <ion-option [value]="bod" *ngFor="let bod of api.objects.bodegas">
