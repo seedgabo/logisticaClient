@@ -17,22 +17,26 @@ export class ClientesHome {
   }
 
   getOrders(refresher = null) {
-    this.api
-      .get(
-        `pedidos?where[cliente_id]=${this.api.user.cliente_id}&paginate=150&order[updated_at]=&order[estado]=desc&include=items.unit,archivos`
-      )
-      .then((data: any) => {
-        this._orders = data.data;
-        this.filter();
-        if (refresher) {
-          refresher.complete();
-        }
-      })
-      .catch((err) => {
-        if (refresher) {
-          refresher.complete();
-        }
-      });
+    this.api.ready.then(() => {
+      this.api
+        .get(
+          `pedidos?where[cliente_id]=${
+            this.api.user.cliente_id
+          }&paginate=150&order[updated_at]=&order[estado]=desc&include=items.unit,archivos`
+        )
+        .then((data: any) => {
+          this._orders = data.data;
+          this.filter();
+          if (refresher) {
+            refresher.complete();
+          }
+        })
+        .catch((err) => {
+          if (refresher) {
+            refresher.complete();
+          }
+        });
+    });
   }
 
   filter() {

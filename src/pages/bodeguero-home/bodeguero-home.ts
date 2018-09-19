@@ -18,20 +18,24 @@ export class BodegueroHomePage {
   }
 
   getOrders(refresher = null) {
-    this.api
-      .get(`pedidos?where[estado]=solicitud recogida&paginate=150&order[updated_at]=&order[estado]=desc&include=items.unit,archivos,driver`)
-      .then((data: any) => {
-        this._orders = data.data;
-        this.filter();
-        if (refresher) {
-          refresher.complete();
-        }
-      })
-      .catch((err) => {
-        if (refresher) {
-          refresher.complete();
-        }
-      });
+    this.api.ready.then(() => {
+      this.api
+        .get(
+          `pedidos?where[estado]=solicitud recogida&paginate=150&order[updated_at]=&order[estado]=desc&include=items.unit,archivos,driver`
+        )
+        .then((data: any) => {
+          this._orders = data.data;
+          this.filter();
+          if (refresher) {
+            refresher.complete();
+          }
+        })
+        .catch((err) => {
+          if (refresher) {
+            refresher.complete();
+          }
+        });
+    });
   }
 
   filter() {
