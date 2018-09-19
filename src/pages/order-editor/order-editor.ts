@@ -95,7 +95,6 @@ export class OrderEditorPage {
     modal.present();
     modal.onDidDismiss((data, role) => {
       if (role !== "cancel") {
-        console.log(data, role);
         data.cantidad_pedidos = 1;
         this._addItem(data);
       }
@@ -103,7 +102,9 @@ export class OrderEditorPage {
   }
 
   _addItem(item) {
-    this.order.items.push(item);
+    if (this.order.items.find((i) => i.id == item.id) == null) {
+      this.order.items.push(item);
+    }
   }
 
   removeItem(i) {

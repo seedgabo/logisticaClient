@@ -59,7 +59,9 @@ export class OrderEditorBodegaPage {
     this.loading = true;
     var promise;
     var data = {
-      fecha_entrega: moment().local().format("YYYY-MM-DD HH:mm:ss"),
+      fecha_entrega: moment()
+        .local()
+        .format("YYYY-MM-DD HH:mm:ss"),
       direccion_envio: this.bodega && this.bodega.location ? this.bodega.location.address : "" + this.bodega.direccion_envio,
       tipo: this.order.tipo,
       estado: "solicitud en bodega",
@@ -101,7 +103,9 @@ export class OrderEditorBodegaPage {
   }
 
   _addItem(item) {
-    this.order.items.push(item);
+    if (this.order.items.find((i) => i.id == item.id) == null) {
+      this.order.items.push(item);
+    }
   }
 
   removeItem(i) {

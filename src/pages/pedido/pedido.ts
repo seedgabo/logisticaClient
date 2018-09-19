@@ -99,7 +99,9 @@ export class PedidoPage {
   }
 
   _addItem(item) {
-    this.pedido.items.push(item);
+    if (this.pedido.items.find((i) => i.id == item.id) == null) {
+      this.pedido.items.push(item);
+    }
   }
 
   removeItem(i) {
