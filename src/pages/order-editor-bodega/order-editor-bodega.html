@@ -44,9 +44,17 @@
     </ion-select>
   </ion-item>
 
+
+
   <div style="margin-top:15px">
     <signature [(ngModel)]="signature" color="primary"></signature>
   </div>
+
+  <ion-item>
+    <ion-label> Hacer entrada a Bodega</ion-label>
+    <ion-checkbox [(ngModel)]="make_entry"></ion-checkbox>
+  </ion-item>
+
 
   <!-- Productos -->
   <ion-list no-padding no-margin>
@@ -87,6 +95,7 @@
       </button>
     </ion-fab>
   </ion-list>
+
 
 </ion-content>
 

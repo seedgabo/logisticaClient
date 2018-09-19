@@ -18,7 +18,7 @@
 
 
 <ion-content>
-  <ion-item>
+  <ion-item *ngIf="!order.id || order.direccion_envio">
     <ion-label floating> {{'literals.address' | trans}}</ion-label>
     <ion-select [(ngModel)]="order.direccion_envio">
       <ion-option [value]="address.address" *ngFor="let address of addresses">
@@ -28,7 +28,8 @@
   </ion-item>
 
   <div text-right>
-    <button (click)="addAddress()" ion-button clear small> {{'crud.add' | trans}} {{'literals.address' | trans }}
+    <button (click)="addAddress()" ion-button clear small> {{'crud.add' | trans}}
+      {{'literals.address' | trans }}
     </button>
   </div>
 
@@ -43,10 +44,12 @@
     <image-input [(ngModel)]="image" [clear]="true" color="primary"></image-input>
   </div>
   <div *ngIf="image" style="margin-top:15px">
-    <image-input [label]="('literals.image' | trans ) + '2'" [(ngModel)]="image2" [clear]="true" color="primary"></image-input>
+    <image-input [label]="('literals.image' | trans ) + '2'" [(ngModel)]="image2" [clear]="true"
+                 color="primary"></image-input>
   </div>
   <div *ngIf="image2" style="margin-top:15px">
-    <image-input [label]="('literals.image' | trans ) + '3'" [(ngModel)]="image3" [clear]="true" color="primary"></image-input>
+    <image-input [label]="('literals.image' | trans ) + '3'" [(ngModel)]="image3" [clear]="true"
+                 color="primary"></image-input>
   </div>
 
   <!-- Productos -->

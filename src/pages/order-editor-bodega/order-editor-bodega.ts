@@ -17,7 +17,7 @@ export class OrderEditorBodegaPage {
     tipo: "Residuos Aprovechables",
     estado: "solicitud en bodega",
     fecha_entrega: null,
-    direccion_envio: null,
+    direccion_envio: "",
     user_id: this.api.user.id,
     cliente_id: this.api.user.cliente_id,
     entidad_id: this.api.user.entidad_id,
@@ -27,6 +27,7 @@ export class OrderEditorBodegaPage {
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   bodega = null;
+  make_entry = true;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
@@ -46,6 +47,7 @@ export class OrderEditorBodegaPage {
       }
     }
     this.api.load("clientes");
+    this.api.load("inventarios");
     this.api.load("bodegas?scope[byuser]=1");
   }
 
@@ -73,6 +75,9 @@ export class OrderEditorBodegaPage {
         this.order = resp;
         if (this.signature) {
           await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Bodeguero.jpg");
+        }
+        if (this.make_entry) {
+          await this.makeEntryToBodega();
         }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
@@ -112,7 +117,7 @@ export class OrderEditorBodegaPage {
   }
 
   canSave() {
-    return this.order.tipo && this.order.items && this.order.items.length > 0;
+    return this.bodega && this.order.tipo && this.order.items && this.order.items.length > 0;
   }
 
   uploadFile(image, item, name = null) {
@@ -163,5 +168,27 @@ export class OrderEditorBodegaPage {
 
     //New Code
     return new Blob([ab], { type: mimeString });
+  }
+
+  makeEntryToBodega() {
+    var data = {
+      razon: "Entrada por bodega",
+      cliente_id: this.order.cliente_id,
+      entidad_id: this.order.entidad_id,
+      bodega_id: this.bodega.id,
+      entries: [],
+      outputs: []
+    };
+    this.order.items.forEach((item) => {
+      var i = this.api.objects.inventarios.find((inv) => inv.referencia == item.referencia);
+      if (i) {
+        data.entries.push({ item_id: i.id, bodega_id: this.bodega.id, quantity: item.cantidad_pedidos });
+      }
+    });
+
+    this.api.post("inventarios/transform", data).then((resp) => {
+      console.log(resp);
+      this.loading = false;
+    });
   }
 }
