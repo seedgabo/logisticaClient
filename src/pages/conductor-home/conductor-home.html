@@ -15,7 +15,7 @@
   </ion-navbar>
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="query" (ionInput)="filter()" [debounce]="750" [placeholder]="'Buscar Ordenes...'"
-      [animated]="true"></ion-searchbar>
+                   [animated]="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -55,7 +55,7 @@
         </span>
         <span text-wrap>
           <b>{{api.trans('literals.shipping address')}}:</b>
-          {{order.direccion_entrega}}
+          {{order.direccion_envio}}
           <br>
         </span>
         <span text-wrap>
