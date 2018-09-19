@@ -157,7 +157,9 @@ export class OrderCreatorPage {
   }
 
   _addItem(item) {
-    this.order.items.push(item);
+    if (!this.order.items.find((i) => i.id == item.id)) {
+      this.order.items.push(item);
+    }
   }
 
   removeItem(i) {
