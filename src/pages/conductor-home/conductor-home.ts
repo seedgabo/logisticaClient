@@ -41,7 +41,7 @@ export class ConductorHomePage {
       .get(
         `pedidos?include=cliente,items.unit,archivos&where[conductor_id]=${
           this.api.user.conductor.id
-        }&whereIn[estado]=solicitud programada,solicitud recogida&paginate=300&order[updated_at]=&order[estado]=desc`
+        }&whereIn[estado]=solicitud programada&paginate=300&order[updated_at]=&order[estado]=desc`
       )
       .then((data: any) => {
         this._orders = data.data;
@@ -67,7 +67,7 @@ export class ConductorHomePage {
       next: []
     };
     this.orders.forEach((o) => {
-      var d = moment(o.fecha_entrega);
+      var d = moment(o.fecha_envio);
       var now = moment();
       if (now.isSame(d, "day")) {
         this.orderable.today.push(o);

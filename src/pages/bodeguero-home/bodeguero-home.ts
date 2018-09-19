@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, ModalController } from "ionic-angular";
 import { Api } from "../../providers/api/api";
 import { NotificacionesPage } from "../notificaciones/notificaciones";
-import moment from "moment";
 @IonicPage()
 @Component({
   selector: "page-bodeguero-home",
