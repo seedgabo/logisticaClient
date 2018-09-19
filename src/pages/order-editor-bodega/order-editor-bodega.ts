@@ -56,21 +56,34 @@ export class OrderEditorBodegaPage {
   }
 
   async save() {
+    function pad(n, width, z = "0") {
+      n = n + "";
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
     this.loading = true;
     var promise;
-    var data = {
+    var data: any = {
       fecha_entrega: moment()
         .local()
         .format("YYYY-MM-DD HH:mm:ss"),
       direccion_envio: this.bodega && this.bodega.location ? this.bodega.location.address : "" + this.bodega.direccion_envio,
       tipo: this.order.tipo,
       estado: "solicitud en bodega",
+      cliente_id: this.order.cliente_id,
+      entidad_id: this.order.entidad_id,
+      pedido_id: this.order.pedido_id,
       items: this.order.items
     };
     if (this.order.id) {
       promise = this.api.put(`pedidos/${this.order.id}`, data);
     } else {
-      promise = this.api.post(`pedidos`, data);
+      var count: any = await this.api.get(`pedidos?where[cliente_id]=${data.cliente_id}&count=1`).catch((err) => {
+        this.loading = false;
+      });
+      count = pad(++count, 4);
+      (data.numero_pedido = `01/${this.api.objects.clientes.collection[data.cliente_id].document}/0${this.tipos.indexOf(this.order.tipo) +
+        1}/${count}`),
+        (promise = this.api.post(`pedidos`, data));
     }
     promise
       .then(async (resp) => {
