@@ -59,7 +59,7 @@ export class OrderEditorBodegaPage {
     this.loading = true;
     var promise;
     var data = {
-      fecha_entrega: new Date().toISOString(),
+      fecha_entrega: moment().local().format("YYYY-MM-DD HH:mm:ss"),
       direccion_envio: this.bodega && this.bodega.location ? this.bodega.location.address : "" + this.bodega.direccion_envio,
       tipo: this.order.tipo,
       estado: "solicitud en bodega",
