@@ -25,7 +25,7 @@ export class ConductorHomePage {
     past: "Pasadas",
     yesterday: "Ayer",
     today: "Hoy",
-    tomorrow: "Manana",
+    tomorrow: "Mañana",
     week: "Esta Semana",
     next: "Programadas"
   };
