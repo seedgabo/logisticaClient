@@ -19,20 +19,10 @@ export class StoragePage {
   }
 
   getBodegas(refresher = null) {
-    var promise;
-    var isSuperAdmin = this.api.isSuperAdmin();
-    if (isSuperAdmin) {
-      promise = this.api.get("bodegas?scope[byuser]=1&with[]=items.inventarios");
-    } else {
-      promise = this.api.get(`user/${this.api.user.id}?with[]=bodegas.items.inventarios`);
-    }
-    promise
+    this.api
+      .get("bodegas?scope[byuser]=1&with[]=items.inventarios")
       .then((resp: any) => {
-        if (isSuperAdmin) {
-          this._bodegas = resp;
-        } else {
-          this._bodegas = resp.bodegas;
-        }
+        this._bodegas = resp;
         this.filter();
         if (refresher) refresher.complete();
       })
