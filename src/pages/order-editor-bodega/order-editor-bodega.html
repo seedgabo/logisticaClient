@@ -35,14 +35,8 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="!order.id && api.objects.clientes">
-    <ion-label floating>{{ 'literals.client' | trans }}</ion-label>
-    <ion-select [(ngModel)]="order.cliente_id">
-      <ion-option [value]="cli.id" *ngFor="let cli of api.objects.clientes">
-        {{ cli.full_name_cedula }}
-      </ion-option>
-    </ion-select>
-  </ion-item>
+  <item-selector [(ngModel)]="order.cliente_id" [trackBy]="'id'" [resource]="'clientes'" [title]="'full_name_cedula'"
+                 [placeholder]="'literals.client' | trans"></item-selector>
 
 
 

@@ -52,6 +52,7 @@ import { Geolocation } from "@ionic-native/geolocation";
 import { Push } from "@ionic-native/push";
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { PipesModule } from "../pipes/pipes.module";
+import { ItemFinderPage } from "../pages/item-finder/item-finder";
 @NgModule({
   declarations: [
     MyApp,
@@ -88,6 +89,7 @@ import { PipesModule } from "../pipes/pipes.module";
     Consulta,
     listTicket,
     ProductSearchPage,
+    ItemFinderPage,
     FilterTicket,
     Fechar
   ],
@@ -127,7 +129,8 @@ import { PipesModule } from "../pipes/pipes.module";
     Facturas,
     Invoice,
     listTicket,
-    ProductSearchPage
+    ProductSearchPage,
+    ItemFinderPage
   ],
   providers: [Api, CodePush, SplashScreen, Geolocation, StatusBar, InAppBrowser, Push, FileTransfer]
 })

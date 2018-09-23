@@ -1,0 +1,36 @@
+<ion-header no-border>
+  <ion-navbar color="secondary">
+    <ion-title>{{'literals.' + resource | trans}}</ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="search()" [debounce]="750" [(ngModel)]="query"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div text-center>
+    <ion-spinner *ngIf="loading || !ready"></ion-spinner>
+  </div>
+  <ion-list no-padding no-lines>
+    <button ion-item (click)="select(item)" *ngFor="let item of list">
+      <ion-thumbnail item-left *ngIf="image">
+        <img *ngIf="item[image]" [src]="item[image]" onerror="this.styles.display = 'none'">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item[title] }}</h2>
+        <h3 *ngIf="item[description]">{{ item[description] }}</h3>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="item._selected" item-right color="primary" *ngIf="multiple"></ion-checkbox>
+    </button>
+  </ion-list>
+  <ion-fab bottom right *ngIf="multiple">
+    <button ion-fab (click)="save()">
+      <ion-icon class="fa fa-save"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

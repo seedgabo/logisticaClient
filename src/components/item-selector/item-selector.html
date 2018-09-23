@@ -1,0 +1,22 @@
+<button ion-item (click)="selectItem()">
+  <ion-spinner item-left *ngIf="!ready"></ion-spinner>
+  <h2 *ngIf="!item">
+    <span *ngIf="!placeholder">
+      {{'crud.select' | trans }} {{'literals.' + resource | trans }}
+    </span>
+    <span *ngIf="placeholder">
+      {{ placeholder }}
+    </span>
+
+  </h2>
+  <ion-avatar item-left *ngIf="item && item[image]">
+    <img [src]="item[image]" alt="">
+  </ion-avatar>
+  <span *ngIf="!multiple && item">
+    <span>{{ item[title] }}</span>
+  </span>
+  <span *ngIf="multiple && item">
+    <span>{{ item.length }} {{'crud.selecteds' | trans }} </span>
+  </span>
+  <ion-icon item-end name="arrow-dropdown"></ion-icon>
+</button>
