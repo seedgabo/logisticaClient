@@ -10,7 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <input type="file" capture="camera" id="input-image" accept="image/*" (change)="readFile($event)" style="display:none;">
+  <input type="file" capture="camera" id="input-image" accept="image/*" (change)="readFile($event)"
+         style="display:none;">
   <ion-list>
 
     <ion-item>
@@ -19,13 +20,31 @@
     </ion-item>
 
     <ion-item>
+      <ion-label floating>{{'literals.reference' | trans}}</ion-label>
+      <ion-input [(ngModel)]="item.referencia"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>{{'literals.description' | trans}}</ion-label>
       <ion-textarea [(ngModel)]="item.descripcion"></ion-textarea>
     </ion-item>
 
-    <ion-item>
-      <ion-label floating>{{'literals.reference' | trans}}</ion-label>
-      <ion-input [(ngModel)]="item.referencia"></ion-input>
+    <ion-item *ngIf="api.objects.units">
+      <ion-label floating>{{'literals.unit' | trans}}</ion-label>
+      <ion-select [(ngModel)]="item.unit_id">
+        <ion-option *ngFor="let unit of api.objects.units" [value]="unit.id">
+          {{unit.name}} <small>({{unit.short}})</small>
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="api.objects['categorias-productos']">
+      <ion-label floating>{{'literals.category' | trans}}</ion-label>
+      <ion-select [(ngModel)]="item.categoria_id">
+        <ion-option *ngFor="let cat of api.objects['categorias-productos']" [value]="cat.id">
+          {{cat.nombre}}
+        </ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item *ngIf="api.objects.bodegas">

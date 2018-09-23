@@ -13,7 +13,8 @@ export class ItemPage {
     estado: true,
     referencia: "",
     bodega_id: null,
-    unit_id: null
+    unit_id: null,
+    categoria_id: null
   };
   bodega = null;
   cliente = null;
@@ -39,6 +40,8 @@ export class ItemPage {
     }
     console.log(this.item);
     this.api.load("bodegas");
+    this.api.load("units");
+    this.api.load("categorias-productos");
   }
 
   ionViewDidLoad() {}
@@ -51,7 +54,8 @@ export class ItemPage {
       estado: this.item.estado,
       referencia: this.item.referencia,
       bodega_id: this.item.bodega_id,
-      unit_id: this.item.unit_id
+      unit_id: this.item.unit_id,
+      categoria_id: this.item.categoria_id
     };
 
     if (this.item.id) {

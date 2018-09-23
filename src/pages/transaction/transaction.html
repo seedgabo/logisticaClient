@@ -1,6 +1,7 @@
 <ion-header>
-  <ion-navbar color="favorite">
-    <ion-title>{{'literals.transaction' | trans }} {{'literals.' + transaction.transaccion | trans }} | {{ item.item }} </ion-title>
+  <ion-navbar color="primary">
+    <ion-title>{{'literals.transaction' | trans }} {{'literals.' + transaction.transaccion | trans
+      }} | {{ item.item }} </ion-title>
     <ion-buttons end>
       <button ion-button clear icon-only (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -17,7 +18,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>{{'literals.quantity' | trans}}</ion-label>
+      <ion-label floating>{{'literals.quantity' | trans}}
+        <span *ngIf="item.unit">
+          ( {{ item.unit.short }} )
+        </span>
+      </ion-label>
       <ion-input type="number" [(ngModel)]="transaction.quantity"></ion-input>
     </ion-item>
 
