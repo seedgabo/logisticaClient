@@ -21,8 +21,11 @@ export class OrderCreatorPage {
     user_id: this.api.user.id,
     cliente_id: this.api.user.cliente_id,
     entidad_id: this.api.user.entidad_id,
-    items: []
+    items: [],
+    nit_document: "",
+    nombre_document: ""
   };
+  advanced = false;
   image = null;
   image2 = null;
   image3 = null;
@@ -104,7 +107,7 @@ export class OrderCreatorPage {
     }
     count = pad(++count, 4);
     var promise;
-    var data = {
+    var data: any = {
       numero_pedido: `01/${this.api.user.cliente.document}/0${this.tipos.indexOf(this.order.tipo) + 1}/${count}`,
       direccion_envio: this.order.direccion_envio,
       tipo: this.order.tipo,
@@ -117,6 +120,8 @@ export class OrderCreatorPage {
       cliente_id: this.order.cliente_id,
       items: this.order.items
     };
+    if (this.advanced && this.order.nombre_document) data.nombre_document = this.order.nombre_document;
+    if (this.advanced && this.order.nit_document) data.nit_document = this.order.nit_document;
     if (this.order.id) {
       promise = this.api.put(`pedidos/${this.order.id}`, data);
     } else {
