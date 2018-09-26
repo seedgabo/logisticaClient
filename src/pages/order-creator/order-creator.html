@@ -52,6 +52,22 @@
                  color="primary"></image-input>
   </div>
 
+  <!-- Advanced -->
+  <ion-item>
+    <ion-label> Avanzado</ion-label>
+    <ion-checkbox [(ngModel)]="advanced"></ion-checkbox>
+  </ion-item>
+  <div *ngIf="advanced">
+    <ion-item>
+      <ion-label floating>{{'Nombre de Proveedor que genera la orden'}}</ion-label>
+      <ion-input [(ngModel)]="order.nombre_document"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'NIT de Proveedor que genera la orden'}}</ion-label>
+      <ion-input [(ngModel)]="order.nit_document"></ion-input>
+    </ion-item>
+  </div>
+
   <!-- Productos -->
   <ion-list no-padding no-margin>
     <ion-list-header>
@@ -93,21 +109,7 @@
   </ion-list>
 
 
-  <!-- Advanced -->
-  <ion-item>
-    <ion-label> Avanzado</ion-label>
-    <ion-checkbox [(ngModel)]="advanced"></ion-checkbox>
-  </ion-item>
-  <div *ngIf="advanced">
-    <ion-item>
-      <ion-label floating>{{'Nombre de Proveedor que genera la orden'}}</ion-label>
-      <ion-input [(ngModel)]="order.nombre_document"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{'NIT de Proveedor que genera la orden'}}</ion-label>
-      <ion-input [(ngModel)]="order.nit_document"></ion-input>
-    </ion-item>
-  </div>
+
 
 
 </ion-content>
