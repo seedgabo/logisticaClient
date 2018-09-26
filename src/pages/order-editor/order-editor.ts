@@ -102,7 +102,7 @@ export class OrderEditorPage {
   }
 
   _addItem(item) {
-    if (!this.order.items.find((i) => i.id == item.id)) {
+    if (!this.order.items.find((i) => i.id == item.id || item.id == i.producto_id)) {
       this.order.items.push(item);
     }
   }
