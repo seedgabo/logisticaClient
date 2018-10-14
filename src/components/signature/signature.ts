@@ -16,9 +16,14 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 export class SignatureComponent implements ControlValueAccessor, OnChanges {
   public signature;
   public ready = false;
-  @Input() large: boolean = false;
-  @Input() color: string = "primary";
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
+  @Input()
+  large: boolean = false;
+  @Input()
+  color: string = "primary";
+  @Input()
+  placeholder;
+  @Output()
+  onChange: EventEmitter<any> = new EventEmitter();
   constructor(public modal: ModalController, public api: Api) {}
 
   OpenSignature() {

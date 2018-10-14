@@ -24,6 +24,7 @@ export class OrderEditorPage {
     items: []
   };
   signature = false;
+  signature2 = false;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   addresses = [];
@@ -80,6 +81,9 @@ export class OrderEditorPage {
         this.order = resp;
         if (this.signature) {
           await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Conductor.jpg");
+        }
+        if (this.signature2) {
+          await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Proveedor.jpg");
         }
         this.viewCtrl.dismiss(this.order);
         this.loading = false;

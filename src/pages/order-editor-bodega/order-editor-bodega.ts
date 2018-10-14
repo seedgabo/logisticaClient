@@ -24,6 +24,7 @@ export class OrderEditorBodegaPage {
     items: []
   };
   signature = false;
+  signature2 = false;
   loading = false;
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   bodega = null;
@@ -71,6 +72,8 @@ export class OrderEditorBodegaPage {
       estado: "solicitud en bodega",
       cliente_id: this.order.cliente_id,
       entidad_id: this.order.entidad_id,
+      bodega_id: this.bodega.id,
+      bodeguero_id: this.api.user.id,
       pedido_id: this.order.pedido_id,
       items: this.order.items
     };
@@ -90,6 +93,9 @@ export class OrderEditorBodegaPage {
         this.order = resp;
         if (this.signature) {
           await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Bodeguero.jpg");
+        }
+        if (this.signature2) {
+          await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Conductor.jpg");
         }
         if (this.make_entry) {
           await this.makeEntryToBodega();
