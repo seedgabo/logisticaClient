@@ -85,6 +85,8 @@ export class OrderEditorPage {
         if (this.signature2) {
           await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Proveedor.jpg");
         }
+        await this.api.post(`pedidos/${this.order.id}/order-collected-mail`, {});
+
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
       })
