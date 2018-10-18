@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavParams, ViewController, ModalController } from "ionic-angular";
+import { IonicPage, NavParams, ViewController, ModalController, AlertController } from "ionic-angular";
 import moment from "moment";
 import { Api } from "../../providers/api/api";
 import { ProductSearchPage } from "../product-search/product-search";
@@ -29,7 +29,13 @@ export class OrderEditorBodegaPage {
   tipos = ["Residuos Aprovechables", "Residuos Peligrosos", "Destrucción", "Residuos Orgánicos"];
   bodega = null;
   make_entry = true;
-  constructor(public viewCtrl: ViewController, public navParams: NavParams, public modal: ModalController, public api: Api) {
+  constructor(
+    public viewCtrl: ViewController,
+    public navParams: NavParams,
+    public modal: ModalController,
+    public alert: AlertController,
+    public api: Api
+  ) {
     if (this.navParams.get("order")) {
       this.order = Object.assign({}, this.navParams.get("order"));
       if (this.order.fecha_pedido) {
@@ -50,6 +56,13 @@ export class OrderEditorBodegaPage {
     this.api.load("clientes");
     this.api.load("inventarios");
     this.api.load("bodegas?scope[byuser]=1");
+  }
+
+  ionViewDidLoad() {
+    this.order.items = this.order.items.map((item) => {
+      item.cantidad_despachado = item.cantidad_pedidos;
+      return item;
+    });
   }
 
   dismiss() {
@@ -95,11 +108,12 @@ export class OrderEditorBodegaPage {
           await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Bodeguero.jpg");
         }
         if (this.signature2) {
-          await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Conductor.jpg");
+          await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Conductor en Bodega.jpg");
         }
         if (this.make_entry) {
           await this.makeEntryToBodega();
         }
+        await this.api.post(`pedidos/${this.order.id}/order-stored-mail`, {});
         this.viewCtrl.dismiss(this.order);
         this.loading = false;
       })
@@ -107,6 +121,36 @@ export class OrderEditorBodegaPage {
         this.loading = false;
         this.api.error(err);
       });
+  }
+
+  editItem(item) {
+    this.alert
+      .create({
+        title: "Cambiar Cantidades | " + item.name,
+        subTitle: "Recogidos en Cliente: " + item.cantidad_despachado,
+        inputs: [
+          {
+            type: "number",
+            name: "cantidad_pedidos",
+            placeholder: this.api.trans("literals.quantity"),
+            min: 1,
+            value: item.cantidad_pedidos,
+            label: this.api.trans("literals.quantity")
+          }
+        ],
+        buttons: [
+          this.api.trans("crud.cancel"),
+          {
+            text: this.api.trans("literals.ok"),
+            handler: (data) => {
+              if (data.cantidad_pedidos) {
+                item.cantidad_pedidos = data.cantidad_pedidos;
+              }
+            }
+          }
+        ]
+      })
+      .present();
   }
 
   addItem() {
@@ -129,6 +173,10 @@ export class OrderEditorBodegaPage {
 
   removeItem(i) {
     this.order.items.splice(i, 1);
+  }
+
+  diff(item) {
+    return (Math.abs(item.cantidad_despachado - item.cantidad_pedidos) / item.cantidad_despachado) * 100;
   }
 
   total() {

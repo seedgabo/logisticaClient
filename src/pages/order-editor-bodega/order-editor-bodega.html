@@ -59,33 +59,27 @@
     <ion-list-header>
       {{ 'literals.products' | trans }}
     </ion-list-header>
-    <ion-grid *ngFor="let item of order.items; let i = index">
-      <ion-row justify-content-center align-items-center>
-        <ion-col align-self-center>
-          <ion-item>
-            <ion-label floating>{{'literals.name' | trans}}</ion-label>
-            <ion-input [(ngModel)]="item.name" [placeholder]=" 'literals.name' | trans"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col align-self-center>
-          <ion-item>
-            <ion-label floating>
-              {{'literals.quantity' | trans}}
-              <span *ngIf="item.unit">
-                ({{ item.unit.short }})
-              </span>
-
-            </ion-label>
-            <ion-input [(ngModel)]="item.cantidad_pedidos" type="number" step="any" min="1"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col align-self-center col-1>
-          <button ion-button color="danger" clear icon-only (click)="removeItem(i)">
-            <ion-icon name="remove"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-item-sliding *ngFor="let item of order.items; let i = index">
+      <button (click)="editItem(item)" ion-item>
+        <h2>{{item.name}}</h2>
+        <h3 ion-text color="secondary">Cantidad Pedidos: {{item.cantidad_pedidos}} </h3>
+        <span>Declarados por cliente: {{item.cantidad_despachado}} </span>
+        <span item-right *ngIf="item.cantidad_pedidos != item.cantidad_despachado">
+          <span *ngIf="item.cantidad_pedidos > item.cantidad_despachado">+</span>
+          {{ item.cantidad_pedidos - item.cantidad_despachado }}
+          <small>(
+            <span *ngIf="item.cantidad_pedidos > item.cantidad_despachado">+</span>
+            <span *ngIf="item.cantidad_pedidos < item.cantidad_despachado">-</span>
+            {{ diff(item) | number:'1.2-2'}}%)
+          </small>
+        </span>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" icon-only (click)="removeItem(i)">
+          <ion-icon name="remove"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
 
     <ion-fab right>
       <button (click)="addItem()" ion-fab mini>
