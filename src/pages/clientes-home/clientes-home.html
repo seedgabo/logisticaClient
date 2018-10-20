@@ -15,7 +15,7 @@
   </ion-navbar>
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="query" (ionInput)="filter()" [debounce]="750" [placeholder]="'Buscar Ordenes...'"
-      [animated]="true"></ion-searchbar>
+                   [animated]="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -41,7 +41,7 @@
         {{ order.tipo }}
       </h4>
       <span text-wrap *ngIf="order.fecha_entrega">
-        <b>{{api.trans('literals.shipping date')}}:</b>
+        <b>Fecha de Solicitud:</b>
         {{order.fecha_entrega | amLocale:'es-us' | amCalendar }}
         <br>
       </span>
