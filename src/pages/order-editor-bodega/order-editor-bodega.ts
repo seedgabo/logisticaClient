@@ -105,7 +105,7 @@ export class OrderEditorBodegaPage {
       .then(async (resp) => {
         this.order = resp;
         if (this.signature) {
-          await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Bodeguero.jpg");
+          await this.uploadFile(this.dataURItoBlob(this.signature), resp, "Firma Personal Planta.jpg");
         }
         if (this.signature2) {
           await this.uploadFile(this.dataURItoBlob(this.signature2), resp, "Firma Conductor en Bodega.jpg");
