@@ -101,6 +101,9 @@ export class OrderCreatorPage {
     var count: any = await this.api.get(`pedidos?where[cliente_id]=${this.api.user.cliente_id}&count=1`).catch((err) => {
       this.loading = false;
     });
+    if(!count){
+      count = 0;
+    }
     function pad(n, width, z = "0") {
       n = n + "";
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;

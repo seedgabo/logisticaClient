@@ -96,6 +96,9 @@ export class OrderEditorBodegaPage {
       var count: any = await this.api.get(`pedidos?where[cliente_id]=${data.cliente_id}&count=1`).catch((err) => {
         this.loading = false;
       });
+      if (!count) {
+        count = 0;
+      }
       count = pad(++count, 4);
       (data.numero_pedido = `01/${this.api.objects.clientes.collection[data.cliente_id].document}/0${this.tipos.indexOf(this.order.tipo) +
         1}/${count}`),
